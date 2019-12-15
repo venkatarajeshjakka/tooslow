@@ -1,5 +1,5 @@
 import React ,{useEffect,useContext} from 'react'
-import { View, Text, ActivityIndicator, StyleSheet} from 'react-native'
+import { View, Text, ActivityIndicator, StyleSheet,ScrollView} from 'react-native'
 import {Context as StockContext } from '../context/StockContext'
 import { NavigationEvents } from 'react-navigation'
 import Section from '../components/Section'
@@ -17,22 +17,26 @@ console.log(searchStockData);
 
     const formatCurrency = (input,currentFormatter) =>{
         return `${currentFormatter} ${input}`
-    }        
+    }  
+    
+    const trimValue = (input) =>{
+        return input.toFixed(2)
+    }
 
-            if(!searchStockData)
-            {
-                return(<ActivityIndicator 
-                size='large'
-                style={{marginTop : 200}}
-                 />)
-            }
-            if(searchStockData)
-            {
-                var summaryDetails = searchStockData.summaryDetail;
-                const {
+        if(!searchStockData)
+        {
+            return(<ActivityIndicator 
+            size='large'
+            tyle={{marginTop : 200}}
+            />)
+        }
+        if(searchStockData)
+        {
+            var summaryDetails = searchStockData.summaryDetail;
+            const {
                 fiftyTwoWeekHigh,
                 fiftyTwoWeekLow
-                 } = summaryDetails;
+            } = summaryDetails;
             var price = searchStockData.price;
             const {regularMarketPrice,
                 regularMarketOpen,
@@ -47,43 +51,58 @@ console.log(searchStockData);
                 exchangeName} = price;
 
                 return (
+                    <ScrollView>
                     <View style={styles.container}>
                     <NavigationEvents
                         onWillBlur ={clearSearchStockData}
                        />
                    
                     
-                        <Text style={styles.heading}>{longName}</Text>
-                        <View style={styles.priceContainer}>
-                            <Text style={{padding :5}}>{regularMarketPrice}</Text>
-                            <Text style={{padding :5}}>
-                                {`${regularMarketChange}(${regularMarketChangePercent*100}%)`} 
-                             </Text>
-                        </View>
-                        <Card>
+                    <Text style={styles.heading}>{longName}</Text>
+                    <View style={styles.priceContainer}>
+                        <Text style={{padding :5}}>{regularMarketPrice}</Text>
+                        <Text style={{padding :5}}>
+                                {`${trimValue(regularMarketChange)}(${trimValue(regularMarketChangePercent*100)}%)`} 
+                        </Text>
+                    </View>
+                    <Card>
+                        <Section>
+                            <Text style={ {fontSize: 20,fontWeight: "bold"}}>
+                                Details
+                            </Text>
+                        </Section>
                          <Section>
-                            <Text style={styles.label}>Day Low /Day High</Text>
-                            <Text style={styles.value}>{`${formatCurrency(regularMarketDayLow,currencySymbol)} - ${formatCurrency(regularMarketDayHigh,currencySymbol)}`}</Text>
+                            <Text style={styles.label}>Day Low </Text>
+                            <Text style={styles.value}>{formatCurrency(regularMarketDayLow,currencySymbol)}</Text>
                         </Section>
                         <Section>
-                            <Text style={styles.label}>Day Low /Day High</Text>
-                            <Text style={styles.value}>{`${formatCurrency(regularMarketDayLow,currencySymbol)} - ${formatCurrency(regularMarketDayHigh,currencySymbol)}`}</Text>
+                            <Text style={styles.label}>Day High</Text>
+                            <Text style={styles.value}>{formatCurrency(regularMarketDayHigh,currencySymbol)}</Text>
+                        </Section>
+                        <Section>
+                            <Text style={styles.label}>Previous Close </Text>
+                            <Text style={styles.value}>{formatCurrency(regularMarketPreviousClose,currencySymbol)}</Text>
+                        </Section>
+                        <Section>
+                            <Text style={styles.label}>Day Open</Text>
+                            <Text style={styles.value}>{formatCurrency(regularMarketOpen,currencySymbol)}</Text>
                         </Section>
 
                         <Section>
-                            <Text style={styles.label}>Day Low /Day High</Text>
-                            <Text style={styles.value}>{`${formatCurrency(regularMarketDayLow,currencySymbol)} - ${formatCurrency(regularMarketDayHigh,currencySymbol)}`}</Text>
+                            <Text style={styles.label}>52 week Low</Text>
+                            <Text style={styles.value}>{formatCurrency(fiftyTwoWeekLow,currencySymbol)}</Text>
                         </Section>
+
                         <Section>
-                            <Text style={styles.label}>Day Low /Day High</Text>
-                            <Text style={styles.value}>{`${formatCurrency(regularMarketDayLow,currencySymbol)} - ${formatCurrency(regularMarketDayHigh,currencySymbol)}`}</Text>
+                            <Text style={styles.label}>52 week High</Text>
+                            <Text style={styles.value}>{formatCurrency(fiftyTwoWeekHigh,currencySymbol)}</Text>
                         </Section>
+                
                         </Card>
                     
-                    
                     </View>
-                    
-                    
+                 </ScrollView>
+                   
                 )
             }
         
@@ -103,12 +122,14 @@ const styles = StyleSheet.create({
     },
     label :{
         flex : 1,
-        fontSize : 14,
-        fontWeight: "bold"
+        fontSize : 16,
+        
     },
     value :{
         flex : 1,
-        fontSize : 14,
+        fontSize : 16,
+        fontWeight: "bold",
+        textAlign: 'right'
     },
     priceContainer :{
         flexDirection : 'column',

@@ -12,6 +12,7 @@ const Section = (props) => {
 const styles = StyleSheet.create({
     container :{
         padding : 10,
+        paddingHorizontal: 15,
         backgroundColor : '#fff',
         justifyContent : 'flex-start',
         flexDirection : 'row',
