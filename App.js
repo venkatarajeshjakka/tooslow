@@ -14,21 +14,12 @@ const searchFlow = createStackNavigator({
   Search : SearchScreen,
   SearchResult : SearchResultScreen
 },{
-     defaultNavigationOptions: {
-      title : 'tooslow',
-      headerStyle: {
-        backgroundColor: '#f4511e',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    },
+    
   
 });
 searchFlow.navigationOptions={
   title : 'Search',
-  tabBarIcon : <Feather name="search" size={20} />,
+  tabBarIcon : ({tintColor}) => <Feather name="search" size={20} color={tintColor}/>,
 }
 const home = createStackNavigator({
   Home : HomeScreen
@@ -47,7 +38,7 @@ const home = createStackNavigator({
 
 home.navigationOptions={
   title : "Home",
-  tabBarIcon : <Feather name="home" size={20} />
+  tabBarIcon : ({tintColor}) => <Feather name="home" size={20} color={tintColor} />
   
   
 }

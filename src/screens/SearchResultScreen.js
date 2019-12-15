@@ -4,6 +4,7 @@ import {Context as StockContext } from '../context/StockContext'
 import { NavigationEvents } from 'react-navigation'
 import Section from '../components/Section'
 import Card from '../components/Card'
+
 const SearchResultScreen = ({navigation}) => {
 
     const stockCode = navigation.getParam('stockCode')
@@ -119,4 +120,11 @@ const styles = StyleSheet.create({
     }
     
 })
+
+SearchResultScreen.navigationOptions = ({navigation}) =>{
+    const stockCode = navigation.getParam('stockCode') 
+    return{
+       title : stockCode
+    }
+}
 export default SearchResultScreen

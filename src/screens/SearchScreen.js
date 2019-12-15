@@ -1,5 +1,5 @@
 import React ,{ useContext }from 'react'
-import { View } from 'react-native'
+import { View , SafeAreaView } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
 import SearchBar from '../components/SearchBar'
 import { Context as StockContext } from '../context/StockContext'
@@ -11,8 +11,9 @@ const SearchScreen = () => {
     const {updateSearchTerm,searchResults,clearSearch,state:{results,searchTerm}} = useContext(StockContext)
     
     return (
-        <View>
-        <NavigationEvents
+        <SafeAreaView>
+         <>
+             <NavigationEvents
             onWillBlur ={clearSearch}
            />
             <SearchBar onTermSubmit={() => searchResults(searchTerm)}
@@ -21,8 +22,14 @@ const SearchScreen = () => {
 
              {results?<SearchResults data={results} /> : null}
 
-        </View>
+        </>
+        </SafeAreaView>
+       
     )
 }
-
+SearchScreen.navigationOptions = () =>{
+    return{
+        header: () => null    
+    }
+}
 export default SearchScreen

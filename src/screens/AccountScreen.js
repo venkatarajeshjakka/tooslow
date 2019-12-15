@@ -11,7 +11,7 @@ const AccountScreen = () => {
 
 AccountScreen.navigationOptions ={
     title : "Account",
-    tabBarIcon : <Feather name="user" size={20} />
+    tabBarIcon : ({tintColor}) => <Feather name="user" size={20} color={tintColor}/> 
 }
 
 export default AccountScreen
