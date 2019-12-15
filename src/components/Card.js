@@ -7,15 +7,14 @@ const Card = props => {
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 2,
     borderRadius: 5,
     borderColor: "#ddd",
     borderBottomWidth: 0,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 1,
+    shadowRadius: 4,
+    elevation: 2,
     margin: 15
   }
 });
