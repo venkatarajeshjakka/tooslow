@@ -9,14 +9,11 @@ import {
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
 import { NavigationEvents } from "react-navigation";
-import Section from "../components/Section";
-import Card from "../components/Card";
 import { formatCurrency, trimValue } from "../extension/Formatter";
 import TargetPriceCard from "../components/TargetPriceCard";
 import * as Animatable from "react-native-animatable";
 import { AntDesign } from "@expo/vector-icons";
 const SearchResultScreen = ({ navigation }) => {
-  
   const stockCode = navigation.getParam("stockCode");
   const [liked, setLiked] = useState(false);
   const AnimatedIcon = Animatable.createAnimatableComponent(AntDesign);
@@ -61,7 +58,47 @@ const SearchResultScreen = ({ navigation }) => {
       exchangeName
     } = price;
     var finanicalData = searchStockData.financialData;
+    const { targetHighPrice, targetLowPrice, targetMeanPrice } = finanicalData;
 
+    let arrayDataTargetPrice = [
+      {
+        label: "Target High",
+        value: formatCurrency(targetHighPrice, currencySymbol)
+      },
+      {
+        label: "Target Low",
+        value: formatCurrency(targetLowPrice, currencySymbol)
+      },
+      {
+        label: "Target Mean",
+        value: formatCurrency(targetMeanPrice, currencySymbol)
+      }
+    ];
+
+    let keyStatisticsarray = [
+      {
+        label: "Previous Close",
+        value: formatCurrency(regularMarketPreviousClose, currencySymbol)
+      },
+      {
+        label: "Open",
+        value: formatCurrency(regularMarketOpen, currencySymbol)
+      },
+      {
+        label: "Day's Range",
+        value: `${formatCurrency(
+          regularMarketDayLow,
+          currencySymbol
+        )} - ${formatCurrency(regularMarketDayHigh, currencySymbol)}`
+      },
+      {
+        label: "52 Week Range",
+        value: `${formatCurrency(
+          fiftyTwoWeekLow,
+          currencySymbol
+        )} - ${formatCurrency(fiftyTwoWeekHigh, currencySymbol)}`
+      }
+    ];
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -92,60 +129,21 @@ const SearchResultScreen = ({ navigation }) => {
                 <AnimatedIcon
                   ref={handleSmallAnimatedIconRef}
                   name={liked ? "heart" : "hearto"}
-                  color={liked ? "#e92f3c": "#515151"}
+                  color={liked ? "#e92f3c" : "#515151"}
                   size={25}
                   style={styles.icon}
                 />
               </TouchableOpacity>
             </View>
           </View>
-          <Card>
-            <Section>
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
-            </Section>
-            <Section>
-              <Text style={styles.label}>Day Low </Text>
-              <Text style={styles.value}>
-                {formatCurrency(regularMarketDayLow, currencySymbol)}
-              </Text>
-            </Section>
-            <Section>
-              <Text style={styles.label}>Day High</Text>
-              <Text style={styles.value}>
-                {formatCurrency(regularMarketDayHigh, currencySymbol)}
-              </Text>
-            </Section>
-            <Section>
-              <Text style={styles.label}>Previous Close </Text>
-              <Text style={styles.value}>
-                {formatCurrency(regularMarketPreviousClose, currencySymbol)}
-              </Text>
-            </Section>
-            <Section>
-              <Text style={styles.label}>Day Open</Text>
-              <Text style={styles.value}>
-                {formatCurrency(regularMarketOpen, currencySymbol)}
-              </Text>
-            </Section>
+          <TargetPriceCard data={keyStatisticsarray} heading="Key Statistics" />
 
-            <Section>
-              <Text style={styles.label}>52 week Low</Text>
-              <Text style={styles.value}>
-                {formatCurrency(fiftyTwoWeekLow, currencySymbol)}
-              </Text>
-            </Section>
-
-            <Section>
-              <Text style={styles.label}>52 week High</Text>
-              <Text style={styles.value}>
-                {formatCurrency(fiftyTwoWeekHigh, currencySymbol)}
-              </Text>
-            </Section>
-          </Card>
-          <TargetPriceCard
-            data={finanicalData}
-            currencySymbol={currencySymbol}
-          />
+          {targetMeanPrice ? (
+            <TargetPriceCard
+              data={arrayDataTargetPrice}
+              heading="Target Price"
+            />
+          ) : null}
         </View>
       </ScrollView>
     );
@@ -161,16 +159,6 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 18,
     marginHorizontal: 5
-  },
-  label: {
-    flex: 1,
-    fontSize: 16
-  },
-  value: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "right"
   },
   priceContainer: {
     flexDirection: "column",

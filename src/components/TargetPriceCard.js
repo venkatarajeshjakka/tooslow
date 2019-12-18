@@ -1,54 +1,41 @@
 import React from "react";
-import { Text,StyleSheet } from "react-native";
+import { Text, StyleSheet, FlatList } from "react-native";
 import Card from "./Card";
 import Section from "./Section";
-import {formatCurrency} from '../extension/Formatter'
 
-const TargetPriceCard = ({ data,currencySymbol }) => {
-  const { targetHighPrice, targetLowPrice, targetMeanPrice } = data;
-  if(!targetMeanPrice)
-  {
-      return null;
-  }
+const TargetPriceCard = ({ data,heading }) => {
+ 
+  
   return (
     <Card>
       <Section>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Target Price</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>{heading}</Text>
       </Section>
-      <Section>
-        <Text style={styles.label}>Target High</Text>
-        <Text style={styles.value}>
-          {formatCurrency(targetHighPrice, currencySymbol)}
-        </Text>
-      </Section>
-
-      <Section>
-        <Text style={styles.label}>Target Low</Text>
-        <Text style={styles.value}>
-          {formatCurrency(targetLowPrice, currencySymbol)}
-        </Text>
-      </Section>
-
-      <Section>
-        <Text style={styles.label}>Target Mean</Text>
-        <Text style={styles.value}>
-          {formatCurrency(targetMeanPrice, currencySymbol)}
-        </Text>
-      </Section>
+      <FlatList
+        data={data}
+        keyExtractor={item => item.label}
+        renderItem={({ item }) => {
+          return (
+            <Section>
+              <Text style={styles.label}>{item.label}</Text>
+              <Text style={styles.value}>{item.value}</Text>
+            </Section>
+          );
+        }}
+      />
     </Card>
   );
 };
 const styles = StyleSheet.create({
-    label :{
-        flex : 1,
-        fontSize : 16,
-        
-    },
-    value :{
-        flex : 1,
-        fontSize : 16,
-        fontWeight: "bold",
-        textAlign: 'right'
-    }
-})
+  label: {
+    flex: 1,
+    fontSize: 14
+  },
+  value: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "right"
+  }
+});
 export default TargetPriceCard;
