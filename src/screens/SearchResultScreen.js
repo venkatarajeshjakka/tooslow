@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
 import { NavigationEvents } from "react-navigation";
-import { formatCurrency, trimValue } from "../extension/Formatter";
+import { trimValue } from "../extension/Formatter";
 import TargetPriceCard from "../components/TargetPriceCard";
 import * as Animatable from "react-native-animatable";
 import { AntDesign } from "@expo/vector-icons";
+import { targetData, statisticsData } from "../mapper/StockResultsMapper";
 const SearchResultScreen = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
   const [liked, setLiked] = useState(false);
@@ -41,64 +42,13 @@ const SearchResultScreen = ({ navigation }) => {
     return <ActivityIndicator size="large" tyle={{ marginTop: 200 }} />;
   }
   if (searchStockData) {
-    var summaryDetails = searchStockData.summaryDetail;
-    const { fiftyTwoWeekHigh, fiftyTwoWeekLow } = summaryDetails;
-    var price = searchStockData.price;
     const {
-      regularMarketPrice,
-      regularMarketOpen,
-      regularMarketDayLow,
-      regularMarketDayHigh,
-      regularMarketPreviousClose,
       longName,
+      regularMarketPrice,
       regularMarketChange,
-      regularMarketChangePercent,
-      currency,
-      currencySymbol,
-      exchangeName
-    } = price;
-    var finanicalData = searchStockData.financialData;
-    const { targetHighPrice, targetLowPrice, targetMeanPrice } = finanicalData;
-
-    let arrayDataTargetPrice = [
-      {
-        label: "Target High",
-        value: formatCurrency(targetHighPrice, currencySymbol)
-      },
-      {
-        label: "Target Low",
-        value: formatCurrency(targetLowPrice, currencySymbol)
-      },
-      {
-        label: "Target Mean",
-        value: formatCurrency(targetMeanPrice, currencySymbol)
-      }
-    ];
-
-    let keyStatisticsarray = [
-      {
-        label: "Previous Close",
-        value: formatCurrency(regularMarketPreviousClose, currencySymbol)
-      },
-      {
-        label: "Open",
-        value: formatCurrency(regularMarketOpen, currencySymbol)
-      },
-      {
-        label: "Day's Range",
-        value: `${formatCurrency(
-          regularMarketDayLow,
-          currencySymbol
-        )} - ${formatCurrency(regularMarketDayHigh, currencySymbol)}`
-      },
-      {
-        label: "52 Week Range",
-        value: `${formatCurrency(
-          fiftyTwoWeekLow,
-          currencySymbol
-        )} - ${formatCurrency(fiftyTwoWeekHigh, currencySymbol)}`
-      }
-    ];
+      regularMarketChangePercent
+    } = searchStockData.price;
+    const { targetMeanPrice } = searchStockData.financialData;
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -136,11 +86,14 @@ const SearchResultScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-          <TargetPriceCard data={keyStatisticsarray} heading="Key Statistics" />
+          <TargetPriceCard
+            data={statisticsData(searchStockData)}
+            heading="Key Statistics"
+          />
 
           {targetMeanPrice ? (
             <TargetPriceCard
-              data={arrayDataTargetPrice}
+              data={targetData(searchStockData)}
               heading="Target Price"
             />
           ) : null}
