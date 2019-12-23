@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
 import { NavigationEvents } from "react-navigation";
-import { trimValue } from "../extension/Formatter";
+import { trimValue,formatDate } from "../extension/Formatter";
 import TargetPriceCard from "../components/TargetPriceCard";
 import * as Animatable from "react-native-animatable";
 import { AntDesign } from "@expo/vector-icons";
@@ -46,41 +46,43 @@ const SearchResultScreen = ({ navigation }) => {
       longName,
       regularMarketPrice,
       regularMarketChange,
-      regularMarketChangePercent
+      regularMarketChangePercent,
+      regularMarketTime
     } = searchStockData.price;
     const { targetMeanPrice } = searchStockData.financialData;
+    var fontColor = regularMarketChange > 0 ? "#008000" : "#ff0000";
     return (
       <ScrollView>
         <View style={styles.container}>
           <NavigationEvents onWillBlur={clearSearchStockData} />
 
           <View style={styles.priceContainer}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                alignContent: "space-around"
-              }}
-            >
+            <View style={styles.headingContainer}>
               <Text style={styles.heading}>{longName}</Text>
             </View>
-            <Text style={{ padding: 5 }}>{regularMarketPrice}</Text>
+
+            <Text style={[styles.marketPrice, { color: fontColor }]}>
+              {regularMarketPrice}
+            </Text>
             <View
               style={{
                 flexDirection: "row"
               }}
             >
-              <Text style={{ padding: 5, flex: 3 }}>
+              <Text style={[styles.marketPriceChange, { color: fontColor }]}>
                 {`${trimValue(regularMarketChange)}(${trimValue(
                   regularMarketChangePercent * 100
                 )}%)`}
+              </Text>
+              <Text style={{paddingHorizontal :25}}>
+                {formatDate(regularMarketTime)}
               </Text>
               <TouchableOpacity onPress={handleOnPressLike}>
                 <AnimatedIcon
                   ref={handleSmallAnimatedIconRef}
                   name={liked ? "heart" : "hearto"}
                   color={liked ? "#e92f3c" : "#515151"}
-                  size={25}
+                  size={30}
                   style={styles.icon}
                 />
               </TouchableOpacity>
@@ -109,8 +111,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   heading: {
-    padding: 5,
-    fontSize: 18,
+    padding: 10,
+    fontSize: 19,
     marginHorizontal: 5
   },
   priceContainer: {
@@ -127,6 +129,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "flex-end",
     flex: 1
+  },
+  marketPrice: {
+    padding: 5,
+    fontSize: 25,
+    fontWeight: "bold"
+  },
+  headingContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignContent: "space-around"
+  },
+  marketPriceChange: {
+    padding: 5,
+    flex: 2,
+    fontSize: 16
   }
 });
 
