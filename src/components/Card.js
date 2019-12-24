@@ -15,8 +15,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 2,
-    margin: 15,
-    padding: 10,
+    marginHorizontal : 15,
+    marginBottom : 10,
+    padding: 5,
   }
 });
 export default Card;
