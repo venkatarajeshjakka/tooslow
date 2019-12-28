@@ -8,6 +8,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import SearchScreen from "./src/screens/SearchScreen";
 import SearchResultScreen from "./src/screens/SearchResultScreen";
 import AccountScreen from "./src/screens/AccountScreen";
+import WatchListScreen from "./src/screens/WatchListScreen";
 import { Provider as StockProvider } from "./src/context/StockContext";
 
 const searchFlow = createStackNavigator(
@@ -47,10 +48,12 @@ home.navigationOptions = {
     <Feather name="home" size={20} color={tintColor} />
   )
 };
+
 var bottomTabNavigator = createBottomTabNavigator(
   {
     home,
     searchFlow,
+    Watchlist : WatchListScreen,
     Account: AccountScreen
   },
   {

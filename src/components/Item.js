@@ -6,7 +6,10 @@ const Item = ({ stockCode, stockName }) => {
     <View style={styles.container}>
       <View style={styles.section}>
         <Text style={styles.stockCode}>{stockCode}</Text>
-        <Text style={styles.stockName}>{stockName}</Text>
+
+        <View style={styles.right}>
+          <Text style={styles.stockName}>{stockName}</Text>
+        </View>
       </View>
     </View>
   );
@@ -28,12 +31,16 @@ const styles = StyleSheet.create({
   },
   stockCode: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold"
   },
   stockName: {
+    fontSize: 16
+  },
+  right: {
     flex: 2,
-    fontSize: 14
+    alignSelf: "flex-end",
+    alignItems: "flex-end"
   }
 });
 export default Item;
