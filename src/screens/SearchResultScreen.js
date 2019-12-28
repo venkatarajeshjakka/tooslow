@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
 import { NavigationEvents } from "react-navigation";
-import { trimValue,formatDate } from "../extension/Formatter";
+import { trimValue, formatDate } from "../extension/Formatter";
 import TargetPriceCard from "../components/TargetPriceCard";
 import * as Animatable from "react-native-animatable";
 import { AntDesign } from "@expo/vector-icons";
@@ -52,54 +52,52 @@ const SearchResultScreen = ({ navigation }) => {
     const { targetMeanPrice } = searchStockData.financialData;
     var fontColor = regularMarketChange > 0 ? "#008000" : "#ff0000";
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <NavigationEvents onWillBlur={clearSearchStockData} />
+      <ScrollView style={styles.container}>
+        <NavigationEvents onWillBlur={clearSearchStockData} />
 
-          <View style={styles.priceContainer}>
-            <View style={styles.headingContainer}>
-              <Text style={styles.heading}>{longName}</Text>
-            </View>
-
-            <Text style={[styles.marketPrice, { color: fontColor }]}>
-              {regularMarketPrice}
-            </Text>
-            <View
-              style={{
-                flexDirection: "row"
-              }}
-            >
-              <Text style={[styles.marketPriceChange, { color: fontColor }]}>
-                {`${trimValue(regularMarketChange)}(${trimValue(
-                  regularMarketChangePercent * 100
-                )}%)`}
-              </Text>
-              <Text style={{paddingHorizontal :25}}>
-                {formatDate(regularMarketTime)}
-              </Text>
-              <TouchableOpacity onPress={handleOnPressLike}>
-                <AnimatedIcon
-                  ref={handleSmallAnimatedIconRef}
-                  name={liked ? "heart" : "hearto"}
-                  color={liked ? "#e92f3c" : "#515151"}
-                  size={30}
-                  style={styles.icon}
-                />
-              </TouchableOpacity>
-            </View>
+        <View style={styles.priceContainer}>
+          <View style={styles.headingContainer}>
+            <Text style={styles.heading}>{longName}</Text>
           </View>
-          <TargetPriceCard
-            data={statisticsData(searchStockData)}
-            heading="Key Statistics"
-          />
 
-          {targetMeanPrice ? (
-            <TargetPriceCard
-              data={targetData(searchStockData)}
-              heading="Target Price"
-            />
-          ) : null}
+          <Text style={[styles.marketPrice, { color: fontColor }]}>
+            {regularMarketPrice}
+          </Text>
+          <View
+            style={{
+              flexDirection: "row"
+            }}
+          >
+            <Text style={[styles.marketPriceChange, { color: fontColor }]}>
+              {`${trimValue(regularMarketChange)}(${trimValue(
+                regularMarketChangePercent * 100
+              )}%)`}
+            </Text>
+            <Text style={{ paddingHorizontal: 25 }}>
+              {formatDate(regularMarketTime)}
+            </Text>
+            <TouchableOpacity onPress={handleOnPressLike}>
+              <AnimatedIcon
+                ref={handleSmallAnimatedIconRef}
+                name={liked ? "heart" : "hearto"}
+                color={liked ? "#e92f3c" : "#515151"}
+                size={30}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
+        <TargetPriceCard
+          data={statisticsData(searchStockData)}
+          heading="Key Statistics"
+        />
+
+        {targetMeanPrice ? (
+          <TargetPriceCard
+            data={targetData(searchStockData)}
+            heading="Target Price"
+          />
+        ) : null}
       </ScrollView>
     );
   }
@@ -107,22 +105,22 @@ const SearchResultScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
-    flex: 1
+    flex: 1,
+    backgroundColor: "#F0EEEE"
   },
   heading: {
     paddingTop: 5,
     fontSize: 19,
     marginHorizontal: 5,
-    fontFamily: "Avenir",
+    fontFamily: "Avenir"
   },
   priceContainer: {
     flexDirection: "column",
     position: "relative",
-    marginTop: 5,
-    marginBottom: 5,
-    marginHorizontal: 15,
-    alignContent: "stretch"
+    paddingHorizontal: 15,
+    alignContent: "stretch",
+    backgroundColor: "#fff",
+    paddingBottom: 5
   },
   icon: {
     paddingHorizontal: 10,
@@ -135,7 +133,7 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 25,
     fontWeight: "bold",
-    fontFamily: "Avenir",
+    fontFamily: "Avenir"
   },
   headingContainer: {
     flexDirection: "row",
@@ -146,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 5,
     flex: 2,
     fontSize: 16,
-    fontFamily: "Avenir",
+    fontFamily: "Avenir"
   }
 });
 
