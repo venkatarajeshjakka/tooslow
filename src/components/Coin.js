@@ -8,6 +8,9 @@ import {
 } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import Change from "./Change";
+import { AntDesign } from "@expo/vector-icons";
+import * as Animatable from "react-native-animatable";
+const AnimatedIcon = Animatable.createAnimatableComponent(AntDesign);
 
 const LeftActions = (progress, dragX) => {
   const scale = dragX.interpolate({
@@ -17,8 +20,13 @@ const LeftActions = (progress, dragX) => {
   });
   return (
     <View style={styles.leftAction}>
+      <AnimatedIcon
+        name="wallet"
+        style={[styles.actionLeftIcon, { transform: [{ scale }] }]}
+        size={25}
+      />
       <Animated.Text style={[styles.actionText, { transform: [{ scale }] }]}>
-        Add to Portfolio
+        Portfolio
       </Animated.Text>
     </View>
   );
@@ -33,6 +41,11 @@ const RightActions = ({ progress, dragX, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.rightAction}>
+        <AnimatedIcon
+          name="delete"
+          style={[styles.actionRightIcon, { transform: [{ scale }] }]}
+          size={25}
+        />
         <Animated.Text style={[styles.actionText, { transform: [{ scale }] }]}>
           Delete
         </Animated.Text>
@@ -91,7 +104,7 @@ const Coin = ({
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    margin: 5,
+    marginTop: 5,
     borderColor: "#ddd",
     borderBottomWidth: 1,
     backgroundColor: "#fff"
@@ -119,19 +132,33 @@ const styles = StyleSheet.create({
     backgroundColor: "#388e3c",
     justifyContent: "center",
     flex: 1,
-    paddingVertical: 10,
+    paddingBottom: 10,
     marginVertical: 5
+  },
+  actionLeftIcon: {
+    marginLeft: 35,
+    marginTop: 5,
+    paddingTop : 15,
+    color: "#fff"
+  },
+  actionRightIcon: {
+    marginRight: 30,
+    marginTop: 5,
+    paddingTop : 15,
+    color: "#fff"
   },
   actionText: {
     color: "#fff",
     fontWeight: "600",
-    padding: 20
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    paddingTop: 5
   },
   rightAction: {
     backgroundColor: "#dd2c00",
     justifyContent: "center",
-    paddingVertical: 10,
-    marginVertical: 5,
+    paddingBottom : 10,
+    marginVertical : 5,
     alignItems: "flex-end"
   }
 });
