@@ -111,9 +111,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   heading: {
-    padding: 10,
+    paddingTop: 5,
     fontSize: 19,
-    marginHorizontal: 5
+    marginHorizontal: 5,
+    fontFamily: "Avenir",
   },
   priceContainer: {
     flexDirection: "column",
@@ -133,7 +134,8 @@ const styles = StyleSheet.create({
   marketPrice: {
     padding: 5,
     fontSize: 25,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontFamily: "Avenir",
   },
   headingContainer: {
     flexDirection: "row",
@@ -143,7 +145,8 @@ const styles = StyleSheet.create({
   marketPriceChange: {
     padding: 5,
     flex: 2,
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: "Avenir",
   }
 });
 
