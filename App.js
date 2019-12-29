@@ -11,18 +11,23 @@ import AccountScreen from "./src/screens/AccountScreen";
 import WatchListScreen from "./src/screens/WatchListScreen";
 import { Provider as StockProvider } from "./src/context/StockContext";
 
-const searchFlow = createStackNavigator(
-  {
-    Search: SearchScreen,
-    SearchResult: SearchResultScreen
-  },
-  {}
-);
-searchFlow.navigationOptions = {
-  title: "Search",
-  tabBarIcon: ({ tintColor }) => (
-    <Feather name="search" size={20} color={tintColor} />
-  )
+const searchFlow = createStackNavigator({
+  Search: SearchScreen,
+  SearchResult: SearchResultScreen
+});
+searchFlow.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    title: "Search",
+    tabBarVisible,
+    tabBarIcon: ({ tintColor }) => (
+      <Feather name="search" size={20} color={tintColor} />
+    )
+  };
 };
 const home = createStackNavigator(
   {
@@ -53,7 +58,7 @@ var bottomTabNavigator = createBottomTabNavigator(
   {
     home,
     searchFlow,
-    Watchlist : WatchListScreen,
+    Watchlist: WatchListScreen,
     Account: AccountScreen
   },
   {
