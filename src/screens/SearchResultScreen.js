@@ -5,7 +5,9 @@ import {
   ActivityIndicator,
   StyleSheet,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight,
+  Modal
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
 import { NavigationEvents } from "react-navigation";
@@ -14,6 +16,7 @@ import TargetPriceCard from "../components/TargetPriceCard";
 import * as Animatable from "react-native-animatable";
 import { AntDesign } from "@expo/vector-icons";
 import { targetData, statisticsData } from "../mapper/StockResultsMapper";
+import SafeAreaView from "react-native-safe-area-view";
 const SearchResultScreen = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
   const [liked, setLiked] = useState(false);
@@ -37,6 +40,8 @@ const SearchResultScreen = ({ navigation }) => {
   useEffect(() => {
     get(stockCode);
   }, []);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   if (!searchStockData) {
     return <ActivityIndicator size="large" tyle={{ marginTop: 200 }} />;
@@ -87,10 +92,42 @@ const SearchResultScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <TargetPriceCard
-          data={statisticsData(searchStockData)}
-          heading="Key Statistics"
-        />
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={() => {}}
+        >
+          <SafeAreaView style={styles.container}>
+            <View style={{ marginTop: 5 }}>
+              <View style={styles.close}>
+                <TouchableHighlight
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <AntDesign name="close" size={25} />
+                </TouchableHighlight>
+              </View>
+
+              <TargetPriceCard
+                data={statisticsData(searchStockData)}
+                heading="Key Statistics"
+              />
+            </View>
+          </SafeAreaView>
+        </Modal>
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <TargetPriceCard
+            data={statisticsData(searchStockData)}
+            heading="Key Statistics"
+          />
+        </TouchableOpacity>
 
         {targetMeanPrice ? (
           <TargetPriceCard
@@ -145,6 +182,12 @@ const styles = StyleSheet.create({
     flex: 2,
     fontSize: 16,
     fontFamily: "Avenir"
+  },
+  close: {
+    alignSelf: "flex-end",
+    alignItems: "flex-end",
+    marginRight: 5,
+    paddingRight: 10
   }
 });
 
