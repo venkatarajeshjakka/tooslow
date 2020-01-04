@@ -10,6 +10,7 @@ import {
   Modal
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
+import { Context as WatchListContext } from '../context/WatchListContext'
 import { NavigationEvents } from "react-navigation";
 import { trimValue, formatDate } from "../extension/Formatter";
 import TargetPriceCard from "../components/TargetPriceCard";
@@ -17,9 +18,19 @@ import * as Animatable from "react-native-animatable";
 import { AntDesign } from "@expo/vector-icons";
 import { targetData, statisticsData } from "../mapper/StockResultsMapper";
 import SafeAreaView from "react-native-safe-area-view";
+
+
 const SearchResultScreen = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
-  const [liked, setLiked] = useState(false);
+  const {checkBookmark, updateBookmark ,state : {isBookmarked,watchListArray}} = useContext(WatchListContext)
+  useEffect(() => {
+    get(stockCode);
+    checkBookmark(stockCode)
+  }, []);
+  console.log('stockCode',stockCode)
+  console.log('isBookmarked',isBookmarked);
+  console.log('watchListArray',watchListArray)
+  
   const AnimatedIcon = Animatable.createAnimatableComponent(AntDesign);
 
   handleSmallAnimatedIconRef = ref => {
@@ -28,18 +39,15 @@ const SearchResultScreen = ({ navigation }) => {
 
   handleOnPressLike = () => {
     this.smallAnimatedIcon.bounceIn();
-    setLiked(!liked);
+    
+    updateBookmark(stockCode)
   };
 
   const {
     state: { searchStockData },
     get,
     clearSearchStockData
-  } = useContext(StockContext);
-  console.log(searchStockData);
-  useEffect(() => {
-    get(stockCode);
-  }, []);
+  } = useContext(StockContext); 
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -84,8 +92,8 @@ const SearchResultScreen = ({ navigation }) => {
             <TouchableOpacity onPress={handleOnPressLike}>
               <AnimatedIcon
                 ref={handleSmallAnimatedIconRef}
-                name={liked ? "heart" : "hearto"}
-                color={liked ? "#e92f3c" : "#515151"}
+                name={isBookmarked ? "heart" : "hearto"}
+                color={isBookmarked ? "#e92f3c" : "#515151"}
                 size={30}
                 style={styles.icon}
               />

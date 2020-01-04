@@ -10,6 +10,7 @@ import SearchResultScreen from "./src/screens/SearchResultScreen";
 import AccountScreen from "./src/screens/AccountScreen";
 import WatchListScreen from "./src/screens/WatchListScreen";
 import { Provider as StockProvider } from "./src/context/StockContext";
+import { Provider as WatchListProvider } from "./src/context/WatchListContext";
 
 const searchFlow = createStackNavigator({
   Search: SearchScreen,
@@ -75,11 +76,13 @@ const App = createAppContainer(bottomTabNavigator);
 export default () => {
   return (
     <StockProvider>
-      <App
-        ref={navigator => {
-          setNavigator(navigator);
-        }}
-      />
+      <WatchListProvider>
+        <App
+          ref={navigator => {
+            setNavigator(navigator);
+          }}
+        />
+      </WatchListProvider>
     </StockProvider>
   );
 };
