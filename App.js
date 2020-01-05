@@ -11,7 +11,7 @@ import AccountScreen from "./src/screens/AccountScreen";
 import WatchListScreen from "./src/screens/WatchListScreen";
 import { Provider as StockProvider } from "./src/context/StockContext";
 import { Provider as WatchListProvider } from "./src/context/WatchListContext";
-
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 const searchFlow = createStackNavigator({
   Search: SearchScreen,
   SearchResult: SearchResultScreen
@@ -75,14 +75,16 @@ const App = createAppContainer(bottomTabNavigator);
 
 export default () => {
   return (
-    <StockProvider>
-      <WatchListProvider>
-        <App
-          ref={navigator => {
-            setNavigator(navigator);
-          }}
-        />
-      </WatchListProvider>
-    </StockProvider>
+    <ActionSheetProvider>
+      <StockProvider>
+        <WatchListProvider>
+          <App
+            ref={navigator => {
+              setNavigator(navigator);
+            }}
+          />
+        </WatchListProvider>
+      </StockProvider>
+    </ActionSheetProvider>
   );
 };
