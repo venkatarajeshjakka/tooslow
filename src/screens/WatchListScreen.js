@@ -2,14 +2,50 @@ import React from "react";
 import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import Coin from "../components/Coin";
+import { useActionSheet } from "@expo/react-native-action-sheet";
+
 const WatchListScreen = () => {
+  const { showActionSheetWithOptions } = useActionSheet();
+
+  const onOpenActionSheet = () => {
+    // Same interface as https://facebook.github.io/react-native/docs/actionsheetios.html
+    const options = [
+      "Remove",
+      "Add to Portfolio",
+      "Add to Recommendation",
+      "Cancel"
+    ];
+    const destructiveButtonIndex = 0;
+    const cancelButtonIndex = 3;
+
+    const title = "Action sheet test";
+    const message = "you seleted";
+
+    showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex,
+        destructiveButtonIndex,
+        title,
+        message
+      },
+      buttonIndex => {
+        // Do something here depending on the button index selected
+      }
+    );
+  };
   return (
     <SafeAreaView>
       <ScrollView>
         <Coin
-          onPress={() => {}}
+          onPress={() => {
+            Alert.alert("action on press");
+          }}
+          longPress={() => {
+            onOpenActionSheet();
+          }}
           onSwipeFromLeft={() => alert("swiped from left")}
-          onRightPress ={() => alert('press on right')}
+          onRightPress={() => alert("press on right")}
           symbol="Reliance"
           name="reliance Industries"
           price="1546"

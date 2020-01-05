@@ -1,8 +1,6 @@
-import { formatCurrency } from '../extension/Formatter'
+import { formatCurrency, formatMarketCapital } from "../extension/Formatter";
 
 const targetData = data => {
-  const { currencySymbol } = data.price;
-
   const {
     targetHighPrice,
     targetLowPrice,
@@ -12,15 +10,15 @@ const targetData = data => {
   let arrayDataTargetPrice = [
     {
       label: "Target High",
-      value: formatCurrency(targetHighPrice, currencySymbol)
+      value: formatCurrency(targetHighPrice)
     },
     {
       label: "Target Low",
-      value: formatCurrency(targetLowPrice, currencySymbol)
+      value: formatCurrency(targetLowPrice)
     },
     {
       label: "Target Mean",
-      value: formatCurrency(targetMeanPrice, currencySymbol)
+      value: formatCurrency(targetMeanPrice)
     }
   ];
 
@@ -35,32 +33,33 @@ const statisticsData = data => {
     regularMarketDayLow,
     regularMarketDayHigh,
     regularMarketPreviousClose,
-
-    currencySymbol
+    marketCap
   } = data.price;
 
   let keyStatisticsarray = [
     {
       label: "Previous Close",
-      value: formatCurrency(regularMarketPreviousClose, currencySymbol)
+      value: formatCurrency(regularMarketPreviousClose)
     },
     {
       label: "Open",
-      value: formatCurrency(regularMarketOpen, currencySymbol)
+      value: formatCurrency(regularMarketOpen)
     },
     {
       label: "Day's Range",
       value: `${formatCurrency(
-        regularMarketDayLow,
-        currencySymbol
-      )} - ${formatCurrency(regularMarketDayHigh, currencySymbol)}`
+        regularMarketDayLow
+      )} - ${formatCurrency(regularMarketDayHigh)}`
     },
     {
       label: "52 Week Range",
       value: `${formatCurrency(
-        fiftyTwoWeekLow,
-        currencySymbol
-      )} - ${formatCurrency(fiftyTwoWeekHigh, currencySymbol)}`
+        fiftyTwoWeekLow
+      )} - ${formatCurrency(fiftyTwoWeekHigh)}`
+    },
+    {
+      label: "Market Capital",
+      value: formatMarketCapital(marketCap)
     }
   ];
   return keyStatisticsarray;

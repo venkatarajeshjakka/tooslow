@@ -61,7 +61,8 @@ const Coin = ({
   symbol,
   price,
   name,
-  change
+  change,
+  longPress
 }) => {
   return (
     <Swipeable
@@ -75,7 +76,7 @@ const Coin = ({
         />
       )}
     >
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} onLongPress={longPress}>
         <View style={styles.container}>
           <View style={styles.row}>
             <Text style={styles.text} numberOfLines={1}>
@@ -138,13 +139,13 @@ const styles = StyleSheet.create({
   actionLeftIcon: {
     marginLeft: 35,
     marginTop: 5,
-    paddingTop : 15,
+    paddingTop: 15,
     color: "#fff"
   },
   actionRightIcon: {
     marginRight: 30,
     marginTop: 5,
-    paddingTop : 15,
+    paddingTop: 15,
     color: "#fff"
   },
   actionText: {
@@ -157,8 +158,8 @@ const styles = StyleSheet.create({
   rightAction: {
     backgroundColor: "#dd2c00",
     justifyContent: "center",
-    paddingBottom : 10,
-    marginVertical : 5,
+    paddingBottom: 10,
+    marginVertical: 5,
     alignItems: "flex-end"
   }
 });

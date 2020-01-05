@@ -10,19 +10,25 @@ import SearchResultScreen from "./src/screens/SearchResultScreen";
 import AccountScreen from "./src/screens/AccountScreen";
 import WatchListScreen from "./src/screens/WatchListScreen";
 import { Provider as StockProvider } from "./src/context/StockContext";
+import { Provider as WatchListProvider } from "./src/context/WatchListContext";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+const searchFlow = createStackNavigator({
+  Search: SearchScreen,
+  SearchResult: SearchResultScreen
+});
+searchFlow.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
 
-const searchFlow = createStackNavigator(
-  {
-    Search: SearchScreen,
-    SearchResult: SearchResultScreen
-  },
-  {}
-);
-searchFlow.navigationOptions = {
-  title: "Search",
-  tabBarIcon: ({ tintColor }) => (
-    <Feather name="search" size={20} color={tintColor} />
-  )
+  return {
+    title: "Search",
+    tabBarVisible,
+    tabBarIcon: ({ tintColor }) => (
+      <Feather name="search" size={20} color={tintColor} />
+    )
+  };
 };
 const home = createStackNavigator(
   {
@@ -53,7 +59,7 @@ var bottomTabNavigator = createBottomTabNavigator(
   {
     home,
     searchFlow,
-    Watchlist : WatchListScreen,
+    Watchlist: WatchListScreen,
     Account: AccountScreen
   },
   {
@@ -69,12 +75,16 @@ const App = createAppContainer(bottomTabNavigator);
 
 export default () => {
   return (
-    <StockProvider>
-      <App
-        ref={navigator => {
-          setNavigator(navigator);
-        }}
-      />
-    </StockProvider>
+    <ActionSheetProvider>
+      <StockProvider>
+        <WatchListProvider>
+          <App
+            ref={navigator => {
+              setNavigator(navigator);
+            }}
+          />
+        </WatchListProvider>
+      </StockProvider>
+    </ActionSheetProvider>
   );
 };
