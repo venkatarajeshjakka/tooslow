@@ -16,6 +16,7 @@ const searchFlow = createStackNavigator({
   Search: SearchScreen,
   SearchResult: SearchResultScreen
 });
+
 searchFlow.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   if (navigation.state.index > 0) {
@@ -30,6 +31,27 @@ searchFlow.navigationOptions = ({ navigation }) => {
     )
   };
 };
+
+const watchListFlow = createStackNavigator({
+  WatchList: WatchListScreen,
+  StockResult: SearchResultScreen
+});
+
+watchListFlow.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    title: "Watchlist",
+    tabBarVisible,
+    tabBarIcon: ({ tintColor }) => (
+      <Feather name="bookmark" size={20} color={tintColor} />
+    )
+  };
+};
+
 const home = createStackNavigator(
   {
     Home: HomeScreen
@@ -59,7 +81,7 @@ var bottomTabNavigator = createBottomTabNavigator(
   {
     home,
     searchFlow,
-    Watchlist: WatchListScreen,
+    watchListFlow,
     Account: AccountScreen
   },
   {
