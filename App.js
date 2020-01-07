@@ -9,7 +9,7 @@ import SearchScreen from "./src/screens/SearchScreen";
 import SearchResultScreen from "./src/screens/SearchResultScreen";
 import AccountScreen from "./src/screens/AccountScreen";
 import WatchListScreen from "./src/screens/WatchListScreen";
-import AddRecommendationScreen from './src/screens/AddRecommendation'
+import AddRecommendationScreen from "./src/screens/AddRecommendation";
 import { Provider as StockProvider } from "./src/context/StockContext";
 import { Provider as WatchListProvider } from "./src/context/WatchListContext";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
@@ -36,7 +36,7 @@ searchFlow.navigationOptions = ({ navigation }) => {
 const watchListFlow = createStackNavigator({
   WatchList: WatchListScreen,
   StockResult: SearchResultScreen,
-  AddRecommendation : AddRecommendationScreen
+  AddRecommendation: AddRecommendationScreen
 });
 
 watchListFlow.navigationOptions = ({ navigation }) => {
