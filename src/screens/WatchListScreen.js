@@ -10,7 +10,7 @@ import Coin from "../components/Coin";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { Context as WatchListContext } from "../context/WatchListContext";
 import { formatCurrency } from "../extension/Formatter";
-const WatchListScreen = ({navigation}) => {
+const WatchListScreen = ({ navigation }) => {
   const {
     getStockInfo,
     state: { watchListArray, watchListStockData }
@@ -20,12 +20,12 @@ const WatchListScreen = ({navigation}) => {
     getStockInfo(watchListArray);
   }, [watchListArray]);
 
-  const onOpenActionSheet = () => {
+  const onOpenActionSheet = stockCode => {
     // Same interface as https://facebook.github.io/react-native/docs/actionsheetios.html
     const options = [
       "Remove",
       "Add to Portfolio",
-      "Add to Recommendation",
+      "Add Recommendation",
       "Cancel"
     ];
     const destructiveButtonIndex = 0;
@@ -44,6 +44,9 @@ const WatchListScreen = ({navigation}) => {
       },
       buttonIndex => {
         // Do something here depending on the button index selected
+        if (buttonIndex == 2) {
+          navigation.navigate("AddRecommendation", { stockCode: stockCode });
+        }
       }
     );
   };
@@ -66,14 +69,14 @@ const WatchListScreen = ({navigation}) => {
               regularMarketPrice,
               regularMarketChangePercent
             } = data.price;
-            let stockCode = symbol.replace('.NS','')
+            let stockCode = symbol.replace(".NS", "");
             return (
               <Coin
                 onPress={() => {
-                  navigation.navigate('StockResult',{stockCode : stockCode })
+                  navigation.navigate("StockResult", { stockCode: stockCode });
                 }}
                 longPress={() => {
-                  onOpenActionSheet();
+                  onOpenActionSheet(stockCode);
                 }}
                 onSwipeFromLeft={() => alert("swiped from left")}
                 onRightPress={() => alert("press on right")}
