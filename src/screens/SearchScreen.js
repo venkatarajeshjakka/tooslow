@@ -23,7 +23,7 @@ const SearchScreen = () => {
           onTermChange={updateSearchTerm}
         />
 
-        {results ? <SearchResults data={results} /> : null}
+        {results && searchTerm ? <SearchResults data={results} /> : null}
       </>
     </SafeAreaView>
   );

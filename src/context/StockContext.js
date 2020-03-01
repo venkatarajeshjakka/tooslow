@@ -54,6 +54,13 @@ const searchResults = dispatch => async searchTerm => {
 };
 
 const updateSearchTerm = dispatch => async searchTerm => {
+  if(searchTerm){
+    const stockData = getStocks();
+
+    var filteredResults = getFilteredStocks(searchTerm, stockData);
+    dispatch({ type: "search_resuls", payload: filteredResults.slice(0, limit) });
+  }
+ 
   dispatch({ type: "update_search_term", payload: searchTerm });
 };
 const clearSearch = dispatch => async () => {

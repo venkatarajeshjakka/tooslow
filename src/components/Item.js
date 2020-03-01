@@ -31,11 +31,11 @@ const styles = StyleSheet.create({
   },
   stockCode: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold"
   },
   stockName: {
-    fontSize: 16
+    fontSize: 14
   },
   right: {
     flex: 2,
