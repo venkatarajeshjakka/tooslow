@@ -1,18 +1,31 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import React, { useContext, useEffect } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  ActivityIndicator
+} from "react-native";
 import Coin from "../components/Coin";
 import { useActionSheet } from "@expo/react-native-action-sheet";
-
-const WatchListScreen = () => {
+import { Context as WatchListContext } from "../context/WatchListContext";
+import { formatCurrency } from "../extension/Formatter";
+const WatchListScreen = ({ navigation }) => {
+  const {
+    getStockInfo,
+    state: { watchListArray, watchListStockData }
+  } = useContext(WatchListContext);
   const { showActionSheetWithOptions } = useActionSheet();
+  useEffect(() => {
+    getStockInfo(watchListArray);
+  }, [watchListArray]);
 
-  const onOpenActionSheet = () => {
+  const onOpenActionSheet = stockCode => {
     // Same interface as https://facebook.github.io/react-native/docs/actionsheetios.html
     const options = [
       "Remove",
       "Add to Portfolio",
-      "Add to Recommendation",
+      "Add Recommendation",
       "Cancel"
     ];
     const destructiveButtonIndex = 0;
@@ -31,41 +44,49 @@ const WatchListScreen = () => {
       },
       buttonIndex => {
         // Do something here depending on the button index selected
+        if (buttonIndex == 2) {
+          navigation.navigate("AddRecommendation", { stockCode: stockCode });
+        }
       }
     );
   };
+
+  if (!watchListStockData) {
+    return <ActivityIndicator size="large" tyle={{ marginTop: 200 }} />;
+  }
   return (
     <SafeAreaView>
       <ScrollView>
-        <Coin
-          onPress={() => {
-            Alert.alert("action on press");
+        <FlatList
+          data={watchListStockData}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => {
+            var keys = Object.keys(item);
+            var data = item[keys[0]];
+            const {
+              longName,
+              symbol,
+              regularMarketPrice,
+              regularMarketChangePercent
+            } = data.price;
+            let stockCode = symbol.replace(".NS", "");
+            return (
+              <Coin
+                onPress={() => {
+                  navigation.navigate("StockResult", { stockCode: stockCode });
+                }}
+                longPress={() => {
+                  onOpenActionSheet(stockCode);
+                }}
+                onSwipeFromLeft={() => alert("swiped from left")}
+                onRightPress={() => alert("press on right")}
+                symbol={stockCode}
+                name={longName}
+                price={formatCurrency(regularMarketPrice)}
+                change={(regularMarketChangePercent * 100).toFixed(2)}
+              />
+            );
           }}
-          longPress={() => {
-            onOpenActionSheet();
-          }}
-          onSwipeFromLeft={() => alert("swiped from left")}
-          onRightPress={() => alert("press on right")}
-          symbol="Reliance"
-          name="reliance Industries"
-          price="1546"
-          change={-2.1}
-        />
-
-        <Coin
-          onPress={() => {}}
-          symbol="SBI"
-          name="SBIN"
-          price="334"
-          change={-0.3}
-        />
-
-        <Coin
-          onPress={() => {}}
-          symbol="Yes Bank"
-          name="Yes Bank"
-          price="51"
-          change={3.3}
         />
       </ScrollView>
     </SafeAreaView>
@@ -73,11 +94,11 @@ const WatchListScreen = () => {
 };
 
 const styles = StyleSheet.create({});
-WatchListScreen.navigationOptions = {
-  title: "Watchlist",
-  tabBarIcon: ({ tintColor }) => (
-    <Feather name="bookmark" size={20} color={tintColor} />
-  )
+
+WatchListScreen.navigationOptions = () => {
+  return {
+    header: () => null
+  };
 };
 
 export default WatchListScreen;

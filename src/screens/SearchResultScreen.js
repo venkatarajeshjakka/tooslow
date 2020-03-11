@@ -10,7 +10,7 @@ import {
   Modal
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
-import { Context as WatchListContext } from '../context/WatchListContext'
+import { Context as WatchListContext } from "../context/WatchListContext";
 import { NavigationEvents } from "react-navigation";
 import { trimValue, formatDate } from "../extension/Formatter";
 import TargetPriceCard from "../components/TargetPriceCard";
@@ -19,18 +19,18 @@ import { AntDesign } from "@expo/vector-icons";
 import { targetData, statisticsData } from "../mapper/StockResultsMapper";
 import SafeAreaView from "react-native-safe-area-view";
 
-
 const SearchResultScreen = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
-  const {checkBookmark, updateBookmark ,state : {isBookmarked,watchListArray}} = useContext(WatchListContext)
+  const {
+    checkBookmark,
+    updateBookmark,
+    state: { isBookmarked }
+  } = useContext(WatchListContext);
   useEffect(() => {
     get(stockCode);
-    checkBookmark(stockCode)
+    checkBookmark(stockCode);
   }, []);
-  console.log('stockCode',stockCode)
-  console.log('isBookmarked',isBookmarked);
-  console.log('watchListArray',watchListArray)
-  
+
   const AnimatedIcon = Animatable.createAnimatableComponent(AntDesign);
 
   handleSmallAnimatedIconRef = ref => {
@@ -39,15 +39,15 @@ const SearchResultScreen = ({ navigation }) => {
 
   handleOnPressLike = () => {
     this.smallAnimatedIcon.bounceIn();
-    
-    updateBookmark(stockCode)
+
+    updateBookmark(stockCode);
   };
 
   const {
     state: { searchStockData },
     get,
     clearSearchStockData
-  } = useContext(StockContext); 
+  } = useContext(StockContext);
 
   const [modalVisible, setModalVisible] = useState(false);
 

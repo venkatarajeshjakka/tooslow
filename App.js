@@ -9,6 +9,7 @@ import SearchScreen from "./src/screens/SearchScreen";
 import SearchResultScreen from "./src/screens/SearchResultScreen";
 import AccountScreen from "./src/screens/AccountScreen";
 import WatchListScreen from "./src/screens/WatchListScreen";
+import AddRecommendationScreen from "./src/screens/AddRecommendation";
 import { Provider as StockProvider } from "./src/context/StockContext";
 import { Provider as WatchListProvider } from "./src/context/WatchListContext";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
@@ -16,6 +17,7 @@ const searchFlow = createStackNavigator({
   Search: SearchScreen,
   SearchResult: SearchResultScreen
 });
+
 searchFlow.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   if (navigation.state.index > 0) {
@@ -30,6 +32,28 @@ searchFlow.navigationOptions = ({ navigation }) => {
     )
   };
 };
+
+const watchListFlow = createStackNavigator({
+  WatchList: WatchListScreen,
+  StockResult: SearchResultScreen,
+  AddRecommendation: AddRecommendationScreen
+});
+
+watchListFlow.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    title: "Watchlist",
+    tabBarVisible,
+    tabBarIcon: ({ tintColor }) => (
+      <Feather name="bookmark" size={20} color={tintColor} />
+    )
+  };
+};
+
 const home = createStackNavigator(
   {
     Home: HomeScreen
@@ -59,7 +83,7 @@ var bottomTabNavigator = createBottomTabNavigator(
   {
     home,
     searchFlow,
-    Watchlist: WatchListScreen,
+    watchListFlow,
     Account: AccountScreen
   },
   {

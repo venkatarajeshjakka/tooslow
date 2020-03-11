@@ -20,12 +20,14 @@ const watchListReducer = (state, action) => {
           )
         };
       }
+    
       return {
         ...state,
         isBookmarked: true,
         watchListArray: [...state.watchListArray, action.payload]
       };
-
+    case 'watchlist_stock_data' :
+      return{...state,watchListStockData : action.payload}
     default:
       return state;
   }
@@ -38,8 +40,19 @@ const checkBookmark = dispatch => async stockCode => {
 const updateBookmark = dispatch => async stockCode => {
   dispatch({ type: "bookmark_update", payload: stockCode });
 };
+
+const getStockInfo = dispatch => async stockCodeArray => {
+  const pArray = stockCodeArray.map(async stockCode => {
+    stockCode = stockCode + ".NS";
+    const baseUrl = `/get-nse-stocks?stockCode=${stockCode}`;
+    var response = await Stock.get(baseUrl);
+    return response.data;
+  });
+  const stockArray = await Promise.all(pArray);
+  dispatch({ type: "watchlist_stock_data", payload: stockArray });
+};
 export const { Provider, Context } = createDataContext(
   watchListReducer,
-  { checkBookmark, updateBookmark },
-  { isBookmarked: false, watchListArray: ["SBIN", "RELIANCE"] }
+  { checkBookmark, updateBookmark ,getStockInfo},
+  { isBookmarked: false, watchListArray: ["SBIN", "RELIANCE"],watchListStockData : null }
 );
