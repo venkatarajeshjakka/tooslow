@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import Input from "../components/Input";
+import Input from "../components/form/Input";
 const AddRecommendation = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
   const [targetPrice, setTargetPrice] = useState("");

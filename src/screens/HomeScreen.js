@@ -1,11 +1,11 @@
-import React,{useState} from "react";
-import { View, Text, SafeAreaView, Button } from "react-native";
-import { AreaChart, Grid } from "react-native-svg-charts";
+import React, { useState } from "react";
+import { View, SafeAreaView } from "react-native";
+import { AreaChart } from "react-native-svg-charts";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
-import RadioButtonGroup from "../components/RadioButtonGroup";
+import RadioButtonGroup from "../components/form/RadioButtonGroup";
+import Button from "../components/form/Button";
 const HomeScreen = () => {
-
-const [radioButtonValue,setRadioButtonValue] = useState('pay');
+  const [radioButtonValue, setRadioButtonValue] = useState("pay");
   const data = [50, 10, 40, 95, 85, 91, 35, 53, 24, 50];
 
   const Gradient = ({ index }) => (
@@ -45,6 +45,23 @@ const [radioButtonValue,setRadioButtonValue] = useState('pay');
         value={radioButtonValue}
         onPress={setRadioButtonValue}
       />
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-around"
+        }}
+      >
+        <Button
+          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+          title="Buy"
+        />
+        <Button
+          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+          buttonStyle={{ backgroundColor: "#FF0000", shadowColor: "#FF0000" }}
+          title="Sell"
+        />
+      </View>
     </SafeAreaView>
   );
 };

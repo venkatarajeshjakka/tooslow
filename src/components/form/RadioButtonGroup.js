@@ -10,11 +10,11 @@ import {
 const RadioButtonGroup = ({ options, onPress, value }) => {
   return (
     <FlatList
-    contentContainerStyle={{ 
-    flexDirection : 'row',
-    justifyContent : 'space-evenly'
-    }}
-     data={options}
+      contentContainerStyle={{
+        flexDirection: "row",
+        justifyContent: "space-evenly"
+      }}
+      data={options}
       numColumns={2}
       keyExtractor={item => item.key}
       renderItem={({ item }) => {
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 20,
     marginLeft: 10,
-    marginRight : 10,
-   },
+    marginRight: 10
+  },
   circle: {
     height: 20,
     width: 20,
