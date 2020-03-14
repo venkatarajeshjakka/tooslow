@@ -14,11 +14,10 @@ import { Context as WatchListContext } from "../context/WatchListContext";
 import { NavigationEvents } from "react-navigation";
 import { trimValue, formatDate } from "../extension/Formatter";
 import TargetPriceCard from "../components/TargetPriceCard";
-import * as Animatable from "react-native-animatable";
 import { AntDesign } from "@expo/vector-icons";
 import { targetData, statisticsData } from "../mapper/StockResultsMapper";
 import SafeAreaView from "react-native-safe-area-view";
-
+import { Button } from "../components/form";
 const SearchResultScreen = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
   const {
@@ -31,15 +30,7 @@ const SearchResultScreen = ({ navigation }) => {
     checkBookmark(stockCode);
   }, []);
 
-  const AnimatedIcon = Animatable.createAnimatableComponent(AntDesign);
-
-  handleSmallAnimatedIconRef = ref => {
-    this.smallAnimatedIcon = ref;
-  };
-
   handleOnPressLike = () => {
-    this.smallAnimatedIcon.bounceIn();
-
     updateBookmark(stockCode);
   };
 
@@ -89,15 +80,17 @@ const SearchResultScreen = ({ navigation }) => {
             <Text style={{ paddingHorizontal: 25 }}>
               {formatDate(regularMarketTime)}
             </Text>
-            <TouchableOpacity onPress={handleOnPressLike}>
-              <AnimatedIcon
-                ref={handleSmallAnimatedIconRef}
-                name={isBookmarked ? "heart" : "hearto"}
-                color={isBookmarked ? "#e92f3c" : "#515151"}
-                size={30}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+              title="Buy"
+            />
+
+            <Button
+              onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+              title="Sell"
+            />
           </View>
         </View>
 
@@ -196,6 +189,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginRight: 5,
     paddingRight: 10
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingHorizontal: 5,
+    paddingVertical: 10
   }
 });
 

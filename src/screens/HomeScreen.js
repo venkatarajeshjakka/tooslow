@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import { AreaChart } from "react-native-svg-charts";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
-import RadioButtonGroup from "../components/form/RadioButtonGroup";
-import Button from "../components/form/Button";
+
+import { GradientButton, Button, RadioButtonGroup } from "../components/form";
 const HomeScreen = () => {
   const [radioButtonValue, setRadioButtonValue] = useState("pay");
   const data = [50, 10, 40, 95, 85, 91, 35, 53, 24, 50];
@@ -21,7 +21,7 @@ const HomeScreen = () => {
     </Defs>
   );
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <AreaChart
         style={{ height: 200 }}
         data={data}
@@ -30,24 +30,25 @@ const HomeScreen = () => {
       >
         <Gradient />
       </AreaChart>
+      <View>
+        <RadioButtonGroup
+          options={[
+            {
+              key: "pay",
+              text: "BUY"
+            },
+            {
+              key: "performance",
+              text: "SELL"
+            }
+          ]}
+          value={radioButtonValue}
+          onPress={setRadioButtonValue}
+        />
+      </View>
 
-      <RadioButtonGroup
-        options={[
-          {
-            key: "pay",
-            text: "BUY"
-          },
-          {
-            key: "performance",
-            text: "SELL"
-          }
-        ]}
-        value={radioButtonValue}
-        onPress={setRadioButtonValue}
-      />
       <View
         style={{
-          flex: 1,
           flexDirection: "row",
           justifyContent: "space-around"
         }}
@@ -60,6 +61,21 @@ const HomeScreen = () => {
           onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
           buttonStyle={{ backgroundColor: "#FF0000", shadowColor: "#FF0000" }}
           title="Sell"
+        />
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around"
+        }}
+      >
+        <GradientButton
+          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+          text="Test"
+        />
+        <GradientButton
+          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+          text="Test2"
         />
       </View>
     </SafeAreaView>

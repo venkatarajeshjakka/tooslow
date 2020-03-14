@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
-export default Input;
+export { Input };

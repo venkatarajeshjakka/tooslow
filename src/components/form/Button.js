@@ -16,10 +16,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#2AC062",
-    shadowColor: "#2AC062",
-    shadowOpacity: 0.4,
-    shadowOffset: { height: 10, width: 0 },
-    shadowRadius: 20,
     margin: 5,
     paddingHorizontal: 10
   },
@@ -27,7 +23,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     textTransform: "uppercase",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    fontWeight: 'bold',
+    fontFamily: 'Avenir',
   }
 });
-export default Button;
+export { Button };
