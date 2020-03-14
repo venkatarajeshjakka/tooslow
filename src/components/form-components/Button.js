@@ -11,7 +11,7 @@ const Button = ({ onPress, title, textStyle, buttonStyle }) => {
 const styles = StyleSheet.create({
   button: {
     flex: 1,
-    height: 50,
+    height: 40,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 16,
-    textTransform: "uppercase",
     color: "#FFFFFF",
     fontWeight: 'bold',
     fontFamily: 'Avenir',

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     margin: 1,
     backgroundColor: "white",
     borderRadius: 5,
-    height: 50
+    height: 40
   },
   buttonText: {
     marginTop: 4,
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "#008f68",
     fontSize: 16,
-    textTransform: "uppercase"
   }
 });
 export { GradientButton };

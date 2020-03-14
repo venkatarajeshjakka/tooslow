@@ -3,7 +3,7 @@ import { View, SafeAreaView } from "react-native";
 import { AreaChart } from "react-native-svg-charts";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
 
-import { GradientButton, Button, RadioButtonGroup } from "../components/form";
+import { GradientButton, Button, RadioButtonGroup } from "../components/form-components";
 const HomeScreen = () => {
   const [radioButtonValue, setRadioButtonValue] = useState("pay");
   const data = [50, 10, 40, 95, 85, 91, 35, 53, 24, 50];
