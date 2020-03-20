@@ -3,7 +3,7 @@ import { View, SafeAreaView } from "react-native";
 import { AreaChart } from "react-native-svg-charts";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
 
-import { GradientButton, Button, RadioButtonGroup } from "../components/form-components";
+import { GradientButton, Button, RadioButtonGroup ,Chip} from "../components/form-components";
 const HomeScreen = () => {
   const [radioButtonValue, setRadioButtonValue] = useState("pay");
   const data = [50, 10, 40, 95, 85, 91, 35, 53, 24, 50];
@@ -77,6 +77,31 @@ const HomeScreen = () => {
           onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
           text="Test2"
         />
+      </View>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
+          <Chip 
+           value="HCL"
+           onPress={() => alert(`u pressed chip`)}
+           />
+           <Chip 
+           value="BAJAJ FINANCE"
+           onPress={() => alert(`u pressed chip`)}
+           />
+           <Chip 
+           value="SBI"
+           onPress={() => alert(`u pressed chip`)}
+           />
+           <Chip 
+           value="RELIANCE"
+           onPress={() => alert(`u pressed chip`)}
+           />
+           <Chip 
+           value="HCL"
+           onPress={() => alert(`u pressed chip`)}
+           /><Chip 
+           value="HCL"
+           onPress={() => alert(`u pressed chip`)}
+           />
       </View>
     </SafeAreaView>
   );
