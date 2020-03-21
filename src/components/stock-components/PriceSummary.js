@@ -9,7 +9,8 @@ const PriceSummary = ({
   regularMarketChangePercent,
   regularMarketTime,
   handleOnPressLike,
-  isBookmarked
+  isBookmarked,
+  onPressAdd
 }) => {
   var fontColor = regularMarketChange > 0 ? "#008000" : "#ff0000";
   return (
@@ -37,7 +38,7 @@ const PriceSummary = ({
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+          onPress={onPressAdd}
           buttonStyle={{
             borderRadius: 20,
             backgroundColor: "black"

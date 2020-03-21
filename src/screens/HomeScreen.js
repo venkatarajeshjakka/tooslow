@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, SafeAreaView } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Text
+} from "react-native";
 import { AreaChart } from "react-native-svg-charts";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
 import {
@@ -9,8 +15,11 @@ import {
   Chip,
   Input
 } from "../components/form-components";
+import BottomSheet from "reanimated-bottom-sheet";
+import { Header, Panel } from "../components/action-sheet-components";
 const HomeScreen = () => {
   const [radioButtonValue, setRadioButtonValue] = useState("pay");
+
   const data = [50, 10, 40, 95, 85, 91, 35, 53, 24, 50];
 
   const Gradient = ({ index }) => (
@@ -25,6 +34,23 @@ const HomeScreen = () => {
       </LinearGradient>
     </Defs>
   );
+
+  renderInner = () => (
+    <Panel>
+      <Text style={styles.panelTitle}>San Francisco Airport</Text>
+      <Text style={styles.panelSubtitle}>
+        International Airport - 40 miles away
+      </Text>
+      <View style={styles.panelButton}>
+        <Text style={styles.panelButtonTitle}>Directions</Text>
+      </View>
+      <View style={styles.panelButton}>
+        <Text style={styles.panelButtonTitle}>Search Nearby</Text>
+      </View>
+    </Panel>
+  );
+
+  bs = React.createRef();
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <AreaChart
@@ -93,21 +119,60 @@ const HomeScreen = () => {
         <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
         <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
       </View>
-        <View>
+      <View>
         <Input
-        label="Target :"
-        secureTextEntry={false}
-        value=""
-        onChangeText={input => {
-          console.log(input);
-        }}
-        placeholder="Target Price .."
-        keyboardType={"numeric"}
+          label="Target :"
+          secureTextEntry={false}
+          value=""
+          onChangeText={input => {
+            console.log(input);
+          }}
+          placeholder="Target Price .."
+          keyboardType={"numeric"}
+        />
+      </View>
+      <View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            this.bs.current.snapTo(1);
+          }}
+        >
+          <Text>Touch</Text>
+        </TouchableWithoutFeedback>
+      </View>
+      <BottomSheet
+        ref={this.bs}
+        snapPoints={[500, 300, 0]}
+        renderContent={this.renderInner}
+        renderHeader={Header}
+        initialSnap={2}
       />
-        </View>
-
     </SafeAreaView>
   );
 };
 
+const styles = StyleSheet.create({
+  panelTitle: {
+    fontSize: 27,
+    height: 35
+  },
+  panelSubtitle: {
+    fontSize: 14,
+    color: "gray",
+    height: 30,
+    marginBottom: 10
+  },
+  panelButton: {
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: "#318bfb",
+    alignItems: "center",
+    marginVertical: 10
+  },
+  panelButtonTitle: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "white"
+  }
+});
 export default HomeScreen;

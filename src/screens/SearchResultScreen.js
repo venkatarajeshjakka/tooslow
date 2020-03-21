@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import {
   View,
-  Text,
   ActivityIndicator,
   StyleSheet,
   ScrollView,
@@ -17,6 +16,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { targetData, statisticsData } from "../mapper/StockResultsMapper";
 import SafeAreaView from "react-native-safe-area-view";
 import { PriceSummary } from "../components/stock-components";
+
+
 const SearchResultScreen = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
   const {
@@ -66,6 +67,7 @@ const SearchResultScreen = ({ navigation }) => {
           regularMarketTime={regularMarketTime}
           handleOnPressLike={handleOnPressLike}
           isBookmarked={isBookmarked}
+          onPressAdd={() => {}}
         />
 
         <Modal
