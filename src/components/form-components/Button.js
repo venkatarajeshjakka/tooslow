@@ -11,23 +11,20 @@ const Button = ({ onPress, title, textStyle, buttonStyle }) => {
 const styles = StyleSheet.create({
   button: {
     flex: 1,
-    height: 50,
+    height: 40,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#2AC062",
-    shadowColor: "#2AC062",
-    shadowOpacity: 0.4,
-    shadowOffset: { height: 10, width: 0 },
-    shadowRadius: 20,
     margin: 5,
     paddingHorizontal: 10
   },
 
   text: {
     fontSize: 16,
-    textTransform: "uppercase",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    fontWeight: 'bold',
+    fontFamily: 'Avenir',
   }
 });
-export default Button;
+export { Button };

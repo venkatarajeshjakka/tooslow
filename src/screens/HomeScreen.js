@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import { AreaChart } from "react-native-svg-charts";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
-import RadioButtonGroup from "../components/form/RadioButtonGroup";
-import Button from "../components/form/Button";
+import {
+  GradientButton,
+  Button,
+  RadioButtonGroup,
+  Chip,
+  Input
+} from "../components/form-components";
 const HomeScreen = () => {
   const [radioButtonValue, setRadioButtonValue] = useState("pay");
   const data = [50, 10, 40, 95, 85, 91, 35, 53, 24, 50];
@@ -21,7 +26,7 @@ const HomeScreen = () => {
     </Defs>
   );
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <AreaChart
         style={{ height: 200 }}
         data={data}
@@ -30,24 +35,25 @@ const HomeScreen = () => {
       >
         <Gradient />
       </AreaChart>
+      <View>
+        <RadioButtonGroup
+          options={[
+            {
+              key: "pay",
+              text: "BUY"
+            },
+            {
+              key: "performance",
+              text: "SELL"
+            }
+          ]}
+          value={radioButtonValue}
+          onPress={setRadioButtonValue}
+        />
+      </View>
 
-      <RadioButtonGroup
-        options={[
-          {
-            key: "pay",
-            text: "BUY"
-          },
-          {
-            key: "performance",
-            text: "SELL"
-          }
-        ]}
-        value={radioButtonValue}
-        onPress={setRadioButtonValue}
-      />
       <View
         style={{
-          flex: 1,
           flexDirection: "row",
           justifyContent: "space-around"
         }}
@@ -62,6 +68,44 @@ const HomeScreen = () => {
           title="Sell"
         />
       </View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around"
+        }}
+      >
+        <GradientButton
+          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+          text="Test"
+        />
+        <GradientButton
+          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+          text="Test2"
+        />
+      </View>
+      <View
+        style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center" }}
+      >
+        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="BAJAJ FINANCE" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="SBI" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="RELIANCE" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
+      </View>
+        <View>
+        <Input
+        label="Target :"
+        secureTextEntry={false}
+        value=""
+        onChangeText={input => {
+          console.log(input);
+        }}
+        placeholder="Target Price .."
+        keyboardType={"numeric"}
+      />
+        </View>
+
     </SafeAreaView>
   );
 };

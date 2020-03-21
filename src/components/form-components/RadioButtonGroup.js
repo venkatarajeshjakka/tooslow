@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#794F9B"
   }
 });
-export default RadioButtonGroup;
+export { RadioButtonGroup };

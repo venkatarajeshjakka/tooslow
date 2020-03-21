@@ -104,8 +104,7 @@ const Coin = ({
 };
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    marginTop: 5,
+    padding: 15,
     borderColor: "#ddd",
     borderBottomWidth: 1,
     backgroundColor: "#fff"
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
   },
   actionRightIcon: {
     marginRight: 30,
-    marginTop: 5,
+
     paddingTop: 15,
     color: "#fff"
   },
@@ -156,10 +155,11 @@ const styles = StyleSheet.create({
     paddingTop: 5
   },
   rightAction: {
+    flex: 1,
     backgroundColor: "#dd2c00",
     justifyContent: "center",
-    paddingBottom: 10,
-    marginVertical: 5,
+
+    marginTop: 5,
     alignItems: "flex-end"
   }
 });

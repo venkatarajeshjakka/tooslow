@@ -52,7 +52,13 @@ const WatchListScreen = ({ navigation }) => {
   };
 
   if (!watchListStockData) {
-    return <ActivityIndicator size="large" tyle={{ marginTop: 200 }} />;
+    return (
+      <SafeAreaView
+        style={styles.activityIndicatorContainer}
+      >
+        <ActivityIndicator size="large" animating={true} color="#007AFF" />
+      </SafeAreaView>
+    );
   }
   return (
     <SafeAreaView>
@@ -93,7 +99,13 @@ const WatchListScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  activityIndicatorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 WatchListScreen.navigationOptions = () => {
   return {
