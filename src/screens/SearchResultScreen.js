@@ -17,7 +17,6 @@ import { targetData, statisticsData } from "../mapper/StockResultsMapper";
 import SafeAreaView from "react-native-safe-area-view";
 import { PriceSummary } from "../components/stock-components";
 
-
 const SearchResultScreen = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
   const {
