@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import { AreaChart } from "react-native-svg-charts";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
-
-import { GradientButton, Button, RadioButtonGroup ,Chip} from "../components/form-components";
+import {
+  GradientButton,
+  Button,
+  RadioButtonGroup,
+  Chip,
+  Input
+} from "../components/form-components";
 const HomeScreen = () => {
   const [radioButtonValue, setRadioButtonValue] = useState("pay");
   const data = [50, 10, 40, 95, 85, 91, 35, 53, 24, 50];
@@ -78,31 +83,29 @@ const HomeScreen = () => {
           text="Test2"
         />
       </View>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
-          <Chip 
-           value="HCL"
-           onPress={() => alert(`u pressed chip`)}
-           />
-           <Chip 
-           value="BAJAJ FINANCE"
-           onPress={() => alert(`u pressed chip`)}
-           />
-           <Chip 
-           value="SBI"
-           onPress={() => alert(`u pressed chip`)}
-           />
-           <Chip 
-           value="RELIANCE"
-           onPress={() => alert(`u pressed chip`)}
-           />
-           <Chip 
-           value="HCL"
-           onPress={() => alert(`u pressed chip`)}
-           /><Chip 
-           value="HCL"
-           onPress={() => alert(`u pressed chip`)}
-           />
+      <View
+        style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center" }}
+      >
+        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="BAJAJ FINANCE" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="SBI" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="RELIANCE" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
+        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
       </View>
+        <View>
+        <Input
+        label="Target :"
+        secureTextEntry={false}
+        value=""
+        onChangeText={input => {
+          console.log(input);
+        }}
+        placeholder="Target Price .."
+        keyboardType={"numeric"}
+      />
+        </View>
+
     </SafeAreaView>
   );
 };

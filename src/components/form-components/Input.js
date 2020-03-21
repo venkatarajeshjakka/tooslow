@@ -11,17 +11,19 @@ const Input = ({
 }) => {
   const { labelStyle, inputStyle, containerStyle } = styles;
   return (
-    <View style={containerStyle}>
-      <Text style={labelStyle}>{label}</Text>
-      <TextInput
-        secureTextEntry={secureTextEntry}
-        style={inputStyle}
-        value={value}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        autoCorrect={false}
-        keyboardType={keyboardType ? keyboardType : "default"}
-      />
+    <View style={styles.field}>
+      <View style={containerStyle}>
+        <Text style={labelStyle}>{label}</Text>
+        <TextInput
+          secureTextEntry={secureTextEntry}
+          style={inputStyle}
+          value={value}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+          autoCorrect={false}
+          keyboardType={keyboardType ? keyboardType : "default"}
+        />
+      </View>
     </View>
   );
 };
@@ -44,6 +46,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center"
+  },
+  field: {
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: "#6a0dad",
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    position: "relative",
+    marginHorizontal: 15,
+    marginTop: 20
   }
 });
 export { Input };
