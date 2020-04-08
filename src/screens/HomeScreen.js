@@ -4,7 +4,8 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableWithoutFeedback,
-  Text
+  Text,
+  ScrollView
 } from "react-native";
 import { AreaChart } from "react-native-svg-charts";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
@@ -17,6 +18,8 @@ import {
 } from "../components/form-components";
 import BottomSheet from "reanimated-bottom-sheet";
 import { Header, Panel } from "../components/action-sheet-components";
+import { StockSwiper } from "../components/stock-components";
+
 const HomeScreen = () => {
   const [radioButtonValue, setRadioButtonValue] = useState("pay");
 
@@ -52,94 +55,103 @@ const HomeScreen = () => {
 
   bs = React.createRef();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <AreaChart
-        style={{ height: 200 }}
-        data={data}
-        contentInset={{ top: 20, bottom: 20 }}
-        svg={{ fill: "url(#gradient)" }}
-      >
-        <Gradient />
-      </AreaChart>
-      <View>
-        <RadioButtonGroup
-          options={[
-            {
-              key: "pay",
-              text: "BUY"
-            },
-            {
-              key: "performance",
-              text: "SELL"
-            }
-          ]}
-          value={radioButtonValue}
-          onPress={setRadioButtonValue}
-        />
-      </View>
+    <SafeAreaView style={{ backgroundColor: "#F0EEEE" }}>
+      <ScrollView>
+        <AreaChart
+          style={{ height: 200 }}
+          data={data}
+          contentInset={{ top: 20, bottom: 20 }}
+          svg={{ fill: "url(#gradient)" }}
+        >
+          <Gradient />
+        </AreaChart>
+        <View>
+          <RadioButtonGroup
+            options={[
+              {
+                key: "pay",
+                text: "BUY"
+              },
+              {
+                key: "performance",
+                text: "SELL"
+              }
+            ]}
+            value={radioButtonValue}
+            onPress={setRadioButtonValue}
+          />
+        </View>
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around"
-        }}
-      >
-        <Button
-          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
-          title="Buy"
-        />
-        <Button
-          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
-          buttonStyle={{ backgroundColor: "#FF0000", shadowColor: "#FF0000" }}
-          title="Sell"
-        />
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around"
-        }}
-      >
-        <GradientButton
-          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
-          text="Test"
-        />
-        <GradientButton
-          onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
-          text="Test2"
-        />
-      </View>
-      <View
-        style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center" }}
-      >
-        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
-        <Chip value="BAJAJ FINANCE" onPress={() => alert(`u pressed chip`)} />
-        <Chip value="SBI" onPress={() => alert(`u pressed chip`)} />
-        <Chip value="RELIANCE" onPress={() => alert(`u pressed chip`)} />
-        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
-        <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
-      </View>
-      <View>
-        <Input
-          label="Target :"
-          secureTextEntry={false}
-          value=""
-          onChangeText={input => {
-            console.log(input);
-          }}
-          placeholder="Target Price .."
-          keyboardType={"numeric"}
-        />
-      </View>
-      <View>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.bs.current.snapTo(1);
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around"
           }}
         >
-          <Text>Touch</Text>
-        </TouchableWithoutFeedback>
-      </View>
+          <Button
+            onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+            title="Buy"
+          />
+          <Button
+            onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+            buttonStyle={{ backgroundColor: "#FF0000", shadowColor: "#FF0000" }}
+            title="Sell"
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around"
+          }}
+        >
+          <GradientButton
+            onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+            text="Test"
+          />
+          <GradientButton
+            onPress={() => alert(`Why you opened me? Go away, it's mine!`)}
+            text="Test2"
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "center"
+          }}
+        >
+          <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
+          <Chip value="BAJAJ FINANCE" onPress={() => alert(`u pressed chip`)} />
+          <Chip value="SBI" onPress={() => alert(`u pressed chip`)} />
+          <Chip value="RELIANCE" onPress={() => alert(`u pressed chip`)} />
+          <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
+          <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
+        </View>
+        <View>
+          <Input
+            label="Target :"
+            secureTextEntry={false}
+            value=""
+            onChangeText={input => {
+              console.log(input);
+            }}
+            placeholder="Target Price .."
+            keyboardType={"numeric"}
+          />
+        </View>
+        <View>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.bs.current.snapTo(1);
+            }}
+          >
+            <Text>Touch</Text>
+          </TouchableWithoutFeedback>
+        </View>
+
+        <StockSwiper />
+      </ScrollView>
+
       <BottomSheet
         ref={this.bs}
         snapPoints={[500, 300, 0]}

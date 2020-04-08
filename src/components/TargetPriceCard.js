@@ -1,15 +1,13 @@
 import React from "react";
 import { Text, StyleSheet, FlatList, View } from "react-native";
 import Card from "./Card";
-import Section from "./Section";
 
+import { CardHeader ,Section } from "./common";
 const TargetPriceCard = ({ data, heading }) => {
   return (
     <View style={styles.container}>
       <Card>
-        <Section>
-          <Text style={{ fontSize: 20, fontWeight: "bold" ,fontFamily: "Avenir"}}>{heading}</Text>
-        </Section>
+        <CardHeader heading={heading} />
         <FlatList
           data={data}
           keyExtractor={item => item.label}

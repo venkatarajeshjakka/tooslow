@@ -16,3 +16,4 @@ const styles = StyleSheet.create({
   }
 });
 export default Section;
+export { Section };
