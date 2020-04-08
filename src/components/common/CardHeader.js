@@ -12,7 +12,7 @@ const CardHeader = ({ heading }) => {
 const styles = StyleSheet.create({
   heading: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: '500',
     fontFamily: "Avenir"
   }
 });

@@ -1,52 +1,43 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Swiper from "react-native-swiper";
+import { CardHeader } from "../common";
+import Slide from "./Slide";
+
+let data = [
+  {
+    stockCode: "Reliance",
+    stockName: "Reliance Industries",
+    change: 2
+  },
+  {
+    stockCode: "TCS",
+    stockName: "Tata Consulatancy service",
+    change: -1.0
+  },
+  {
+    stockCode: "INFY",
+    stockName: "INFOSYS",
+    change: 2
+  }
+];
+
 const StockSwiper = () => {
   return (
-    <View
-      style={{
-        backgroundColor: "red",
-
-        borderRadius: 20,
-        marginHorizontal: 15,
-        marginVertical: 10
-      }}
-    >
+    <View style={styles.container}>
       <View style={{ backgroundColor: "white", margin: 5 }}>
         <View>
-          <Text
-            style={{
-              margin: 5,
-              paddingTop: 10,
-              fontSize: 20,
-              paddingHorizontal: 10
-            }}
-          >
-            Hello Heading
-          </Text>
-          <Text
-            style={{
-              margin: 5,
-              paddingHorizontal: 10,
-              paddingBottom: 10,
-              fontSize: 12,
-              color: "grey"
-            }}
-          >
-            sub heading
+          <CardHeader heading="Daily Top Gainer" />
+          <Text style={styles.subheading}>
+            These stocks were bought more over the last trading session than any
+            other stocks available.
           </Text>
         </View>
         <View>
-          <Swiper style={styles.wrapper} height={300} loop={false}>
-            <View style={styles.slide}>
-              <Text>Hello Swiper</Text>
-            </View>
-            <View style={styles.slide}>
-              <Text>Beautiful</Text>
-            </View>
-            <View style={styles.slide}>
-              <Text>And simple</Text>
-            </View>
+          <Swiper style={styles.wrapper} height={250} loop={false}>
+            <Slide data={data} />
+            <Slide data={data} />
+            <Slide data={data} />
           </Swiper>
         </View>
       </View>
@@ -55,12 +46,25 @@ const StockSwiper = () => {
 };
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "blue"
+    margin: 5
   },
   slide: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
+  },
+  container: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    marginHorizontal: 15,
+    marginVertical: 10
+  },
+  subheading: {
+    margin: 5,
+    paddingHorizontal: 10,
+
+    fontSize: 16,
+    color: "grey"
   }
 });
 
