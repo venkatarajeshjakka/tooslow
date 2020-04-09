@@ -7,14 +7,23 @@ import {
   TouchableOpacity
 } from "react-native";
 import { navigate } from "../../NavigationRef";
-const IndividualSlide = ({ name, value }) => {
+import { AntDesign } from "@expo/vector-icons";
+
+const IndividualSlide = ({ name, change }) => {
+  let iconName = change > 0 ? "arrowup" : "arrowdown";
   return (
     <View style={styles.container}>
       <View style={styles.section}>
         <Text style={styles.stockCode}>{name}</Text>
 
         <View style={styles.right}>
-          <Text style={styles.stockName}>{value}</Text>
+          <AntDesign
+            name={iconName}
+            size={20}
+            style={{ paddingHorizontal: 5 }}
+          />
+
+          <Text style={styles.value}>{change}%</Text>
         </View>
       </View>
     </View>
@@ -33,7 +42,7 @@ const Slide = ({ data }) => {
               navigate("SearchResult", { stockCode: item.stockCode });
             }}
           >
-            <IndividualSlide name={item.stockName} value={item.change} />
+            <IndividualSlide name={item.stockName} change={item.change} />
           </TouchableOpacity>
         );
       }}
@@ -56,15 +65,17 @@ const styles = StyleSheet.create({
   stockCode: {
     flex: 2,
     fontSize: 18,
-    fontWeight: "400"
+    fontWeight: "400",
+    color: "#0078ff"
   },
-  stockName: {
+  value: {
     fontSize: 16
   },
   right: {
     flex: 1,
-    alignSelf: "flex-end",
-    alignItems: "flex-end"
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    flexDirection: "row"
   }
 });
 export default Slide;

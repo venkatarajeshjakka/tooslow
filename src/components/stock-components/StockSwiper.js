@@ -8,16 +8,19 @@ let data = [
   {
     stockCode: "Reliance",
     stockName: "Reliance Industries",
+    value: '1200.65',
     change: 2
   },
   {
     stockCode: "TCS",
     stockName: "Tata Consulatancy service",
+    value: '1700.65',
     change: -1.0
   },
   {
     stockCode: "INFY",
     stockName: "INFOSYS",
+    value: '653',
     change: 2
   }
 ];

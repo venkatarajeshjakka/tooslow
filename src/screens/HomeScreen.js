@@ -55,7 +55,7 @@ const HomeScreen = () => {
 
   bs = React.createRef();
   return (
-    <SafeAreaView style={{ backgroundColor: "#F0EEEE" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#F0EEEE" }}>
       <ScrollView>
         <AreaChart
           style={{ height: 200 }}
