@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   chip: {
     borderColor: "#848787",
     margin: 5,
-    padding : 10,
+    padding: 5,
     borderRadius: 20,
     backgroundColor: "#fff"
   },
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir",
     paddingHorizontal: 10,
     fontSize: 14,
-    color : '#0078ff',
-    fontWeight : '500'
+    color: "#0078ff",
+    fontWeight: "500"
   }
 });
 export { Chip };

@@ -13,7 +13,6 @@ import {
   GradientButton,
   Button,
   RadioButtonGroup,
-  Chip,
   Input
 } from "../components/form-components";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -113,20 +112,7 @@ const HomeScreen = () => {
             text="Test2"
           />
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            alignItems: "center"
-          }}
-        >
-          <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
-          <Chip value="BAJAJ FINANCE" onPress={() => alert(`u pressed chip`)} />
-          <Chip value="SBI" onPress={() => alert(`u pressed chip`)} />
-          <Chip value="RELIANCE" onPress={() => alert(`u pressed chip`)} />
-          <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
-          <Chip value="HCL" onPress={() => alert(`u pressed chip`)} />
-        </View>
+
         <View>
           <Input
             label="Target :"
