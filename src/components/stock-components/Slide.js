@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { navigate } from "../../NavigationRef";
-import { AntDesign } from "@expo/vector-icons";
+import { Icon } from '../common'
 
 const IndividualSlide = ({ name, change }) => {
   let iconName = change > 0 ? "arrowup" : "arrowdown";
@@ -17,10 +17,9 @@ const IndividualSlide = ({ name, change }) => {
         <Text style={styles.stockCode}>{name}</Text>
 
         <View style={styles.right}>
-          <AntDesign
+          <Icon
             name={iconName}
-            size={20}
-            style={{ paddingHorizontal: 5 }}
+            
           />
 
           <Text style={styles.value}>{change}%</Text>

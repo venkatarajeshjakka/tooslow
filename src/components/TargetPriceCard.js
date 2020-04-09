@@ -27,13 +27,13 @@ const TargetPriceCard = ({ data, heading }) => {
 const styles = StyleSheet.create({
   label: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "Avenir"
   },
   value: {
     flex: 1,
-    fontSize: 14,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "400",
     textAlign: "right",
     fontFamily: "Avenir"
   },

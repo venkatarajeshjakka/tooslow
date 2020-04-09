@@ -1,7 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { trimValue, formatDate } from "../../extension/Formatter";
+import {
+  trimValue,
+  formatDate,
+  formatCurrency
+} from "../../extension/Formatter";
 import { Button } from "../form-components";
+import { Icon } from "../common";
 const PriceSummary = ({
   longName,
   regularMarketPrice,
@@ -13,6 +18,7 @@ const PriceSummary = ({
   onPressAdd
 }) => {
   var fontColor = regularMarketChange > 0 ? "#008000" : "#ff0000";
+  let iconName = regularMarketChange > 0 ? "arrowup" : "arrowdown";
   return (
     <View style={styles.priceContainer}>
       <View style={styles.headingContainer}>
@@ -20,13 +26,14 @@ const PriceSummary = ({
       </View>
 
       <Text style={[styles.marketPrice, { color: fontColor }]}>
-        {regularMarketPrice}
+        {formatCurrency(regularMarketPrice)}
       </Text>
       <View
         style={{
           flexDirection: "row"
         }}
       >
+        <Icon name={iconName} style={{ color: fontColor, fontSize: 15 }} />
         <Text style={[styles.marketPriceChange, { color: fontColor }]}>
           {`${trimValue(regularMarketChange)}(${trimValue(
             regularMarketChangePercent * 100
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
     alignContent: "space-around"
   },
   marketPriceChange: {
-    padding: 5,
+    paddingRight: 5,
     flex: 2,
     fontSize: 16,
     fontFamily: "Avenir"
