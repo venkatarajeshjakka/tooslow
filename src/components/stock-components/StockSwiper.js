@@ -3,29 +3,52 @@ import { View, Text, StyleSheet } from "react-native";
 import Swiper from "react-native-swiper";
 import { CardHeader } from "../common";
 import Slide from "./Slide";
-
+import _ from "underscore";
 let data = [
   {
     stockCode: "Reliance",
     stockName: "Reliance Industries",
-    value: '1200.65',
+    value: "1200.65",
     change: 2
   },
   {
     stockCode: "TCS",
     stockName: "Tata Consulatancy service",
-    value: '1700.65',
+    value: "1700.65",
     change: -1.0
   },
   {
     stockCode: "INFY",
     stockName: "INFOSYS",
-    value: '653',
+    value: "653",
     change: 2
+  },
+  {
+    stockCode: "Reliance",
+    stockName: "Reliance Industries",
+    value: "1200.65",
+    change: 2
+  },
+  {
+    stockCode: "TCS",
+    stockName: "Tata Consulatancy service",
+    value: "1700.65",
+    change: -1.0
   }
 ];
+const DynamicSwiper = ({slideData}) =>{
 
+  return(<Swiper style={styles.wrapper} height={250} loop={false}>
+    {slideData.map((item, key) => {
+      return <Slide key={key} data={item} />;
+    })}
+  </Swiper>)
+}
+const slidesArray = data => {
+  return data.length > 0 ? _.chunk(data, 3) : null;
+};
 const StockSwiper = () => {
+  var slidesData = slidesArray(data);
   return (
     <View style={styles.container}>
       <View style={{ backgroundColor: "white", margin: 5 }}>
@@ -37,11 +60,7 @@ const StockSwiper = () => {
           </Text>
         </View>
         <View>
-          <Swiper style={styles.wrapper} height={250} loop={false}>
-            <Slide data={data} />
-            <Slide data={data} />
-            <Slide data={data} />
-          </Swiper>
+          <DynamicSwiper slideData={slidesData} />
         </View>
       </View>
     </View>
