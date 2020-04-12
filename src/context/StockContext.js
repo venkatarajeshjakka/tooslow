@@ -19,6 +19,19 @@ const stockReducer = (state, action) => {
 
     case "clear_search_Data":
       return { ...state, searchStockData: null };
+
+    case "add_searched_stock":
+      if (
+        state.topSearchedStock &&
+        _.contains(state.topSearchedStock, action.payload)
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        topSearchedStock: [...state.topSearchedStock, action.payload]
+      };
+
     default:
       return state;
   }
@@ -54,13 +67,16 @@ const searchResults = dispatch => async searchTerm => {
 };
 
 const updateSearchTerm = dispatch => async searchTerm => {
-  if(searchTerm){
+  if (searchTerm) {
     const stockData = getStocks();
 
     var filteredResults = getFilteredStocks(searchTerm, stockData);
-    dispatch({ type: "search_resuls", payload: filteredResults.slice(0, limit) });
+    dispatch({
+      type: "search_resuls",
+      payload: filteredResults.slice(0, limit)
+    });
   }
- 
+
   dispatch({ type: "update_search_term", payload: searchTerm });
 };
 const clearSearch = dispatch => async () => {
@@ -72,6 +88,7 @@ const clearSearchStockData = dispatch => async () => {
 };
 
 const get = dispatch => async stockCode => {
+  dispatch({ type: "add_searched_stock", payload: stockCode });
   stockCode = stockCode + ".NS";
 
   const baseUrl = `/get-nse-stocks?stockCode=${stockCode}`;
@@ -86,5 +103,11 @@ const get = dispatch => async stockCode => {
 export const { Provider, Context } = createDataContext(
   stockReducer,
   { searchResults, updateSearchTerm, clearSearch, get, clearSearchStockData },
-  { results: null, errorMessage: "", searchTerm: "", searchStockData: null }
+  {
+    results: null,
+    errorMessage: "",
+    searchTerm: null,
+    searchStockData: null,
+    topSearchedStock: ["TCS", "SBIN", "INFY", "BAJFINANCE", "RELAXO"]
+  }
 );
