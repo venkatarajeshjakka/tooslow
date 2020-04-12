@@ -132,7 +132,15 @@ const styles = StyleSheet.create({
 SearchResultScreen.navigationOptions = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
   return {
-    title: stockCode
+    title: stockCode,
+    headerStyle: {
+      backgroundColor: "#fff"
+    },
+    headerTintColor: "#0078ff",
+    headerTitleStyle: {
+      fontWeight: "500",
+      fontFamily: "Avenir"
+    }
   };
 };
 export default SearchResultScreen;

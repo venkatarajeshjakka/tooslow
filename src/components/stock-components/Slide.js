@@ -38,7 +38,7 @@ const Slide = ({ data }) => {
         return (
           <TouchableOpacity
             onPress={() => {
-              navigate("SearchResult", { stockCode: item.stockCode });
+              navigate("StockResultHome", { stockCode: item.stockCode });
             }}
           >
             <IndividualSlide name={item.stockName} change={item.change} />

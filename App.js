@@ -56,27 +56,37 @@ watchListFlow.navigationOptions = ({ navigation }) => {
 
 const home = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: HomeScreen,
+    StockResultHome: SearchResultScreen
   },
   {
     defaultNavigationOptions: {
+      headerBackTitle: "Back",
       title: "tooslow",
       headerStyle: {
-        backgroundColor: "#f4511e"
+        backgroundColor: "#fff"
       },
-      headerTintColor: "#fff",
+      headerTintColor: "#0078ff",
       headerTitleStyle: {
-        fontWeight: "bold"
+        fontWeight: "500",
+        fontFamily: "Avenir"
       }
     }
   }
 );
 
-home.navigationOptions = {
-  title: "Home",
-  tabBarIcon: ({ tintColor }) => (
-    <Feather name="home" size={20} color={tintColor} />
-  )
+home.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    title: "home",
+    tabBarVisible,
+    tabBarIcon: ({ tintColor }) => (
+      <Feather name="home" size={20} color={tintColor} />
+    )
+  };
 };
 
 var bottomTabNavigator = createBottomTabNavigator(
