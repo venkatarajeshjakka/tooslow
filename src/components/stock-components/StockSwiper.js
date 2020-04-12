@@ -36,14 +36,15 @@ let data = [
     change: -1.0
   }
 ];
-const DynamicSwiper = ({slideData}) =>{
-
-  return(<Swiper style={styles.wrapper} height={250} loop={false}>
-    {slideData.map((item, key) => {
-      return <Slide key={key} data={item} />;
-    })}
-  </Swiper>)
-}
+const DynamicSwiper = ({ slideData }) => {
+  return (
+    <Swiper style={styles.wrapper} height={250} loop={false}>
+      {slideData.map((item, key) => {
+        return <Slide key={key} data={item} />;
+      })}
+    </Swiper>
+  );
+};
 const slidesArray = data => {
   return data.length > 0 ? _.chunk(data, 3) : null;
 };
