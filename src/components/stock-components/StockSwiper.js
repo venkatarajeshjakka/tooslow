@@ -1,41 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import Swiper from "react-native-swiper";
 import { CardHeader } from "../common";
 import Slide from "./Slide";
 import _ from "underscore";
-let data = [
-  {
-    stockCode: "Reliance",
-    stockName: "Reliance Industries",
-    value: "1200.65",
-    change: 2
-  },
-  {
-    stockCode: "TCS",
-    stockName: "Tata Consulatancy service",
-    value: "1700.65",
-    change: -1.0
-  },
-  {
-    stockCode: "INFY",
-    stockName: "INFOSYS",
-    value: "653",
-    change: 2
-  },
-  {
-    stockCode: "Reliance",
-    stockName: "Reliance Industries",
-    value: "1200.65",
-    change: 2
-  },
-  {
-    stockCode: "TCS",
-    stockName: "Tata Consulatancy service",
-    value: "1700.65",
-    change: -1.0
-  }
-];
+
+const Spinner = () => {
+  return (
+    <View style={{ minHeight: 200, justifyContent: "center" }}>
+      <ActivityIndicator size="large" animating={true} color="#007AFF" />
+    </View>
+  );
+};
 const DynamicSwiper = ({ slideData }) => {
   return (
     <Swiper style={styles.wrapper} height={250} loop={false}>
@@ -46,22 +22,19 @@ const DynamicSwiper = ({ slideData }) => {
   );
 };
 const slidesArray = data => {
-  return data.length > 0 ? _.chunk(data, 3) : null;
+  return data && data.length > 0 ? _.chunk(data, 3) : null;
 };
-const StockSwiper = () => {
+const StockSwiper = ({ data, heading, subHeading }) => {
   var slidesData = slidesArray(data);
   return (
     <View style={styles.container}>
       <View style={{ backgroundColor: "white", margin: 5 }}>
         <View>
-          <CardHeader heading="Daily Top Gainer" />
-          <Text style={styles.subheading}>
-            These stocks were bought more over the last trading session than any
-            other stocks available.
-          </Text>
+          <CardHeader heading={heading} />
+          <Text style={styles.subheading}>{subHeading}</Text>
         </View>
         <View>
-          <DynamicSwiper slideData={slidesData} />
+          {slidesData ? <DynamicSwiper slideData={slidesData} /> : <Spinner />}
         </View>
       </View>
     </View>
