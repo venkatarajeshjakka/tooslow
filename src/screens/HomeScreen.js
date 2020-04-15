@@ -3,16 +3,19 @@ import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
 import { StockSwiper } from "../components/stock-components";
 import _ from "underscore";
+
 const HomeScreen = () => {
   const {
     getTopGainer,
     getEquityList,
-    state: { topGainers, equityList }
+    getTopLosser,
+    state: { topGainers, equityList, topLosers }
   } = useContext(StockContext);
 
   useEffect(() => {
     getTopGainer();
     getEquityList();
+    getTopLosser();
   }, []);
 
   var stockName = (data, stockCode) => {
@@ -40,6 +43,11 @@ const HomeScreen = () => {
           }
           heading="Biggest Daily Movers"
           subHeading="These companies gained the most value today of any stock."
+        />
+        <StockSwiper
+          data={topLosers && equityList ? topGainerData(topLosers.data) : null}
+          heading="Biggest Daily Losers"
+          subHeading="These companies lost the most value today of any stock."
         />
       </ScrollView>
     </SafeAreaView>
