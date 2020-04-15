@@ -2,7 +2,7 @@ import createDataContext from "./createDataContext";
 import { getStocks } from "../api/_MockData";
 import _ from "underscore";
 import Stock from "../api/Stock";
-import { AsyncStorage } from "react-native";
+
 const stockReducer = (state, action) => {
   switch (action.type) {
     case "search_resuls":
@@ -31,24 +31,6 @@ const stockReducer = (state, action) => {
         ...state,
         topSearchedStock: [...state.topSearchedStock, action.payload]
       };
-
-    case "get_top_gainer":
-      return { ...state, topGainers: action.payload };
-
-    case "get_top_losser":
-      return { ...state, topLosers: action.payload };
-
-    case "get_yearly_high":
-      return { ...state, yearlyHigh: action.payload };
-
-    case "get_yearly_low":
-      return { ...state, yearlyLow: action.payload };
-
-    case "get_monthly_active":
-      return { ...state, monthlyActive: action.payload };
-
-    case "get_equity_list":
-      return { ...state, equityList: action.payload };
 
     default:
       return state;
@@ -118,86 +100,6 @@ const get = dispatch => async stockCode => {
   } catch (err) {}
 };
 
-const getTopGainer = dispatch => async () => {
-  const baseUrl = "/top-gainers";
-
-  try {
-    var response = await Stock.get(baseUrl);
-    var payload = response.data;
-
-    dispatch({ type: "get_top_gainer", payload: payload });
-  } catch (err) {}
-};
-
-const getTopLosser = dispatch => async () => {
-  const baseUrl = "/top-losers";
-
-  try {
-    var response = await Stock.get(baseUrl);
-    var payload = response.data;
-    dispatch({ type: "get_top_losser", payload: payload });
-  } catch (err) {}
-};
-
-const getYearlyHigh = dispatch => async () => {
-  const baseUrl = "/year-high";
-
-  try {
-    var response = await Stock.get(baseUrl);
-    var payload = response.data;
-    dispatch({ type: "get_yearly_high", payload: payload });
-  } catch (err) {}
-};
-
-const getYearlyLow = dispatch => async () => {
-  const baseUrl = "/year-low";
-
-  try {
-    var response = await Stock.get(baseUrl);
-    var payload = response.data;
-    dispatch({ type: "get_yearly_low", payload: payload });
-  } catch (err) {}
-};
-
-const getMonthlyActive = dispatch => async () => {
-  const baseUrl = "/monthly-active";
-
-  try {
-    var response = await Stock.get(baseUrl);
-    var payload = response.data;
-    dispatch({ type: "get_monthly_active", payload: payload });
-  } catch (err) {}
-};
-
-const retrieveData = async key => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
-      // We have data!!
-      return value;
-    }
-    return null;
-  } catch (error) {
-    // Error retrieving data
-  }
-};
-const storeData = async (key, data) => {
-  try {
-    await AsyncStorage.setItem(key, data);
-  } catch (error) {
-    // Error saving data
-  }
-};
-const getEquityList = dispatch => async () => {
-  const baseUrl = "/equity-list";
-  try {
-    var response = await Stock.get(baseUrl);
-    var payload = response.data;
-
-    dispatch({ type: "get_equity_list", payload: payload });
-  } catch (err) {}
-};
-
 export const { Provider, Context } = createDataContext(
   stockReducer,
   {
@@ -205,25 +107,13 @@ export const { Provider, Context } = createDataContext(
     updateSearchTerm,
     clearSearch,
     get,
-    clearSearchStockData,
-    getTopGainer,
-    getTopLosser,
-    getYearlyHigh,
-    getYearlyLow,
-    getMonthlyActive,
-    getEquityList
+    clearSearchStockData
   },
   {
     results: null,
     errorMessage: "",
     searchTerm: null,
     searchStockData: null,
-    topSearchedStock: ["TCS", "SBIN", "INFY", "BAJFINANCE", "RELAXO"],
-    topGainers: null,
-    topLosers: null,
-    yearlyHigh: null,
-    yearlyLow: null,
-    monthlyActive: null,
-    equityList: null
+    topSearchedStock: ["TCS", "SBIN", "INFY", "BAJFINANCE", "RELAXO"]
   }
 );
