@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   FlatList,
   ActivityIndicator
 } from "react-native";
@@ -53,48 +52,45 @@ const WatchListScreen = ({ navigation }) => {
 
   if (!watchListStockData) {
     return (
-      <SafeAreaView
-        style={styles.activityIndicatorContainer}
-      >
+      <SafeAreaView style={styles.activityIndicatorContainer}>
         <ActivityIndicator size="large" animating={true} color="#007AFF" />
       </SafeAreaView>
     );
   }
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <FlatList
-          data={watchListStockData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => {
-            var keys = Object.keys(item);
-            var data = item[keys[0]];
-            const {
-              longName,
-              symbol,
-              regularMarketPrice,
-              regularMarketChangePercent
-            } = data.price;
-            let stockCode = symbol.replace(".NS", "");
-            return (
-              <Coin
-                onPress={() => {
-                  navigation.navigate("StockResult", { stockCode: stockCode });
-                }}
-                longPress={() => {
-                  onOpenActionSheet(stockCode);
-                }}
-                onSwipeFromLeft={() => alert("swiped from left")}
-                onRightPress={() => alert("press on right")}
-                symbol={stockCode}
-                name={longName}
-                price={formatCurrency(regularMarketPrice)}
-                change={(regularMarketChangePercent * 100).toFixed(2)}
-              />
-            );
-          }}
-        />
-      </ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        data={watchListStockData}
+        scrollEnabled
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => {
+          var keys = Object.keys(item);
+          var data = item[keys[0]];
+          const {
+            longName,
+            symbol,
+            regularMarketPrice,
+            regularMarketChangePercent
+          } = data.price;
+          let stockCode = symbol.replace(".NS", "");
+          return (
+            <Coin
+              onPress={() => {
+                navigation.navigate("StockResult", { stockCode: stockCode });
+              }}
+              longPress={() => {
+                onOpenActionSheet(stockCode);
+              }}
+              onSwipeFromLeft={() => alert("swiped from left")}
+              onRightPress={() => alert("press on right")}
+              symbol={stockCode}
+              name={longName}
+              price={formatCurrency(regularMarketPrice)}
+              change={(regularMarketChangePercent * 100).toFixed(2)}
+            />
+          );
+        }}
+      />
     </SafeAreaView>
   );
 };

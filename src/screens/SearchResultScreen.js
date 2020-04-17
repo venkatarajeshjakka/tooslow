@@ -6,7 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableHighlight,
-  Modal
+  Modal,
+  YellowBox
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
 import { Context as WatchListContext } from "../context/WatchListContext";
@@ -17,7 +18,26 @@ import { targetData, statisticsData } from "../mapper/StockResultsMapper";
 import SafeAreaView from "react-native-safe-area-view";
 import { PriceSummary } from "../components/stock-components";
 
+const ModalSection = ({ staticalData, onPress }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={{ marginTop: 5 }}>
+        <View style={styles.close}>
+          <TouchableHighlight onPress={onPress}>
+            <AntDesign name="close" size={25} />
+          </TouchableHighlight>
+        </View>
+
+        <TargetPriceCard data={staticalData} heading="Key Statistics" />
+      </View>
+    </SafeAreaView>
+  );
+};
+
 const SearchResultScreen = ({ navigation }) => {
+  YellowBox.ignoreWarnings([
+    "VirtualizedLists should never be nested" // TODO: Remove when fixed
+  ]);
   const stockCode = navigation.getParam("stockCode");
   const {
     checkBookmark,
@@ -75,24 +95,12 @@ const SearchResultScreen = ({ navigation }) => {
           visible={modalVisible}
           onRequestClose={() => {}}
         >
-          <SafeAreaView style={styles.container}>
-            <View style={{ marginTop: 5 }}>
-              <View style={styles.close}>
-                <TouchableHighlight
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <AntDesign name="close" size={25} />
-                </TouchableHighlight>
-              </View>
-
-              <TargetPriceCard
-                data={statisticsData(searchStockData)}
-                heading="Key Statistics"
-              />
-            </View>
-          </SafeAreaView>
+          <ModalSection
+            staticalData={statisticsData(searchStockData)}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          />
         </Modal>
         <TouchableOpacity
           onPress={() => {

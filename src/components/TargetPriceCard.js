@@ -2,7 +2,7 @@ import React from "react";
 import { Text, StyleSheet, FlatList, View } from "react-native";
 import Card from "./Card";
 
-import { CardHeader ,Section } from "./common";
+import { CardHeader, Section } from "./common";
 const TargetPriceCard = ({ data, heading }) => {
   return (
     <View style={styles.container}>
