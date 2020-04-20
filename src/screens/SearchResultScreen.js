@@ -6,8 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableHighlight,
-  Modal,
-  YellowBox
+  Modal
 } from "react-native";
 import { Context as StockContext } from "../context/StockContext";
 import { Context as WatchListContext } from "../context/WatchListContext";
@@ -35,9 +34,6 @@ const ModalSection = ({ staticalData, onPress }) => {
 };
 
 const SearchResultScreen = ({ navigation }) => {
-  YellowBox.ignoreWarnings([
-    "VirtualizedLists should never be nested" // TODO: Remove when fixed
-  ]);
   const stockCode = navigation.getParam("stockCode");
   const {
     checkBookmark,
