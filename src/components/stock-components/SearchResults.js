@@ -1,7 +1,7 @@
 import React from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
-import Item from "../components/Item";
-import { navigate } from "../NavigationRef";
+import Item from "../Item";
+import { navigate } from "../../NavigationRef";
 const SearchResults = ({ data }) => {
   return (
     <View>
@@ -25,3 +25,5 @@ const SearchResults = ({ data }) => {
 };
 
 export default SearchResults;
+
+export { SearchResults };
