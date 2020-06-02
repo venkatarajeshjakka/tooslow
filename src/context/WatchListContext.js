@@ -51,6 +51,7 @@ const getStockInfo = dispatch => async stockCodeArray => {
   const stockArray = await Promise.all(pArray);
   dispatch({ type: "watchlist_stock_data", payload: stockArray });
 };
+
 export const { Provider, Context } = createDataContext(
   watchListReducer,
   { checkBookmark, updateBookmark, getStockInfo },

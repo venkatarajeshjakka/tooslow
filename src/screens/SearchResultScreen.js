@@ -13,9 +13,13 @@ import { Context as WatchListContext } from "../context/WatchListContext";
 import { NavigationEvents } from "react-navigation";
 import TargetPriceCard from "../components/TargetPriceCard";
 import { AntDesign } from "@expo/vector-icons";
-import { targetData, statisticsData } from "../mapper/StockResultsMapper";
+import {
+  targetData,
+  statisticsData,
+  companyEssentials
+} from "../mapper/StockResultsMapper";
 import SafeAreaView from "react-native-safe-area-view";
-import { PriceSummary } from "../components/stock-components";
+import { PriceSummary, StockReturns } from "../components/stock-components";
 
 const ModalSection = ({ staticalData, onPress }) => {
   return (
@@ -43,6 +47,7 @@ const SearchResultScreen = ({ navigation }) => {
   useEffect(() => {
     get(stockCode);
     checkBookmark(stockCode);
+    getStockHistory(stockCode);
   }, []);
 
   handleOnPressLike = () => {
@@ -50,15 +55,16 @@ const SearchResultScreen = ({ navigation }) => {
   };
 
   const {
-    state: { searchStockData },
+    state: { searchStockData, stockHistoryArray },
     get,
-    clearSearchStockData
+    clearSearchStockData,
+    getStockHistory
   } = useContext(StockContext);
 
   const [modalVisible, setModalVisible] = useState(false);
 
   if (!searchStockData) {
-    return <ActivityIndicator size="large" tyle={{ marginTop: 200 }} />;
+    return <ActivityIndicator size="large" style={{ marginTop: 200 }} />;
   }
   if (searchStockData) {
     const {
@@ -115,6 +121,17 @@ const SearchResultScreen = ({ navigation }) => {
             heading="Target Price"
           />
         ) : null}
+
+        <TargetPriceCard
+          data={companyEssentials(searchStockData)}
+          heading="Company Essentials"
+        />
+
+        {stockHistoryArray && stockHistoryArray.length > 0 ? (
+          <StockReturns data={stockHistoryArray} />
+        ) : (
+          <ActivityIndicator size="large" />
+        )}
       </ScrollView>
     );
   }
