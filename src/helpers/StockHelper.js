@@ -98,7 +98,7 @@ const tradableArray = (arrayValues, date) => {
   return array;
 };
 
-const getTopGainersOrLoser = (data) =>{
+const getTopGainersOrLoser = data => {
   var mappedData = _.map(data, function(item) {
     var keys = Object.keys(item);
     var itemData = item[keys[0]];
@@ -120,5 +120,5 @@ const getTopGainersOrLoser = (data) =>{
   });
 
   return { topGainer, topLoser };
-}
-export { stockReturns, changePercentage ,getTopGainersOrLoser };
+};
+export { stockReturns, changePercentage, getTopGainersOrLoser };
