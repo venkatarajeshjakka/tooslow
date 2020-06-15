@@ -108,7 +108,7 @@ const getStockHistory = dispatch => async stockCode => {
   const baseUrl = "/nse-historical-data";
 
   try {
-    var response = await Stock.post(baseUrl, { stockCode, months: 1 });
+    var response = await Stock.post(baseUrl, { stockCode, months: 12 });
     var payload = response.data;
     dispatch({ type: "get_stock_data_history", payload: payload });
   } catch (err) {}

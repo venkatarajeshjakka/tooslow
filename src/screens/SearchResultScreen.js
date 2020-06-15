@@ -126,12 +126,13 @@ const SearchResultScreen = ({ navigation }) => {
           data={companyEssentials(searchStockData)}
           heading="Company Essentials"
         />
-
-        {stockHistoryArray && stockHistoryArray.length > 0 ? (
-          <StockReturns data={stockHistoryArray} />
-        ) : (
-          <ActivityIndicator size="large" />
-        )}
+        <View style={{ marginBottom : 30}}>
+          {stockHistoryArray && stockHistoryArray.length > 0 ? (
+            <StockReturns data={stockHistoryArray} />
+          ) : (
+            <ActivityIndicator size="large" />
+          )}
+        </View>
       </ScrollView>
     );
   }

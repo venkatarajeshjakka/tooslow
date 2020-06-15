@@ -1,23 +1,83 @@
 import underscore from "underscore";
+import moment from "moment";
 
 const stockReturns = historyArray => {
   var current = underscore.first(historyArray);
 
   var closePrice = current.close;
 
-  var weeklyArray = underscore.first(historyArray, 5);
+  var weeklyDate = weeklyTradeDay();
+
+  var weeklyArray = tradableArray(historyArray, weeklyDate);
+
   var weekly = underscore.last(weeklyArray);
 
   var weeklyPrice = weekly.close;
 
   var weeklyPriceChange = changePercentage(closePrice, weeklyPrice);
 
-  var monthly = underscore.last(historyArray);
+  var monthPriceChange = getMonthlyPriceChange(historyArray, 1, closePrice);
+
+  var threeMonthPriceChange = getMonthlyPriceChange(
+    historyArray,
+    3,
+    closePrice
+  );
+
+  var sixMonthPriceChange = getMonthlyPriceChange(historyArray, 6, closePrice);
+  var ytdPriceChange = getMonthlyPriceChange(historyArray, 12, closePrice);
+
+  return {
+    weeklyPriceChange,
+    monthPriceChange,
+    threeMonthPriceChange,
+    sixMonthPriceChange,
+    ytdPriceChange
+  };
+};
+
+const getMonthlyPriceChange = (historyArray, number, closePrice) => {
+  var monthlyDate = monthlyTradeDay(number);
+
+  var montlyPriceArray = tradableArray(historyArray, monthlyDate);
+  var monthly = underscore.last(montlyPriceArray);
   var monthlyPrice = monthly.close;
 
-  var monthPriceChange = changePercentage(closePrice, monthlyPrice);
+  return changePercentage(closePrice, monthlyPrice);
+};
+const weeklyTradeDay = () => {
+  var date = new Date();
 
-  return { weeklyPriceChange, monthPriceChange };
+  var currentDay = date.getDay();
+  var difference = 7;
+  if (currentDay === 0) {
+    difference = difference + 2;
+  }
+  if (currentDay === 6) {
+    difference = difference + 1;
+  }
+
+  return new moment().subtract(difference, "d");
+};
+
+const monthlyTradeDay = number => {
+  var monthDay = moment().subtract(number, "M");
+
+  var day = monthDay.day();
+
+  var difference = 0;
+  if (day === 0) {
+    difference = difference + 2;
+  }
+  if (day === 6) {
+    difference = difference + 1;
+  }
+
+  if (difference != 0) {
+    return moment(monthDay).subtract(difference, "d");
+  }
+
+  return monthDay;
 };
 
 const changePercentage = (current, previous) => {
@@ -25,5 +85,16 @@ const changePercentage = (current, previous) => {
   var changePercentage = (change / previous) * 100;
 
   return changePercentage.toFixed(2);
+};
+
+const tradableArray = (arrayValues, date) => {
+  var array = underscore.filter(arrayValues, function(item) {
+    return (
+      moment(item.date).format("YYYY-MM-DD") >=
+      moment(date).format("YYYY-MM-DD")
+    );
+  });
+
+  return array;
 };
 export { stockReturns, changePercentage };
