@@ -10,28 +10,27 @@ import {
   FlatList
 } from "react-native";
 import { Context as WatchListContext } from "../context/WatchListContext";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { TabView, TabBar } from "react-native-tab-view";
 import _ from "underscore";
 const FirstRoute = ({ topGainer }) => {
- 
- return(<View style={styles.container}>
-  <FlatList
-    data={topGainer}
-    scrollEnabled
-    keyExtractor={(item, index) => item.stockCode}
-    renderItem={({ item }) => {
-      return(<Text>{item.stockCode}</Text>)
-    }}
-  />
-</View>)
-  
-}
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={topGainer}
+        scrollEnabled
+        keyExtractor={(item, index) => item.stockCode}
+        renderItem={({ item }) => {
+          return <Text>{item.stockCode}</Text>;
+        }}
+      />
+    </View>
+  );
+};
 
 const SecondRoute = ({ topLoser }) => (
   <View style={styles.container}>
     <View>
       <Text>Second</Text>
-     
     </View>
   </View>
 );
