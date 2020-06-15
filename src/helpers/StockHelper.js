@@ -97,4 +97,28 @@ const tradableArray = (arrayValues, date) => {
 
   return array;
 };
-export { stockReturns, changePercentage };
+
+const getTopGainersOrLoser = (data) =>{
+  var mappedData = _.map(data, function(item) {
+    var keys = Object.keys(item);
+    var itemData = item[keys[0]];
+    const { longName, symbol, regularMarketChangePercent } = itemData.price;
+    let stockCode = symbol.replace(".NS", "");
+    return {
+      stockCode,
+      stockName: longName,
+      change: regularMarketChangePercent
+    };
+  });
+
+  var topGainer = _.filter(mappedData, function(item) {
+    return item.change > 0;
+  });
+
+  var topLoser = _.filter(mappedData, function(item) {
+    return item.change < 0;
+  });
+
+  return { topGainer, topLoser };
+}
+export { stockReturns, changePercentage ,getTopGainersOrLoser };

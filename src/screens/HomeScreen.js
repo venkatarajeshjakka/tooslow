@@ -12,6 +12,7 @@ import {
 import { Context as WatchListContext } from "../context/WatchListContext";
 import { TabView, TabBar } from "react-native-tab-view";
 import _ from "underscore";
+import { getTopGainersOrLoser } from "../helpers/StockHelper";
 const FirstRoute = ({ topGainer }) => {
   return (
     <View style={styles.container}>
@@ -55,30 +56,6 @@ const renderTabBar = props => (
   />
 );
 
-const filtertedData = data => {
-  var mappedData = _.map(data, function(item) {
-    var keys = Object.keys(item);
-    var itemData = item[keys[0]];
-    const { longName, symbol, regularMarketChangePercent } = itemData.price;
-    let stockCode = symbol.replace(".NS", "");
-    return {
-      stockCode,
-      stockName: longName,
-      change: regularMarketChangePercent
-    };
-  });
-
-  var topGainer = _.filter(mappedData, function(item) {
-    return item.change > 0;
-  });
-
-  var topLoser = _.filter(mappedData, function(item) {
-    return item.change < 0;
-  });
-
-  return { topGainer, topLoser };
-};
-
 const HomeScreen = ({ navigation }) => {
   const {
     getStockInfo,
@@ -112,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
     );
   }
 
-  var topGainerOrLoserData = filtertedData(watchListStockData);
+  var topGainerOrLoserData = getTopGainersOrLoser(watchListStockData);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#F0EEEE" }}>
