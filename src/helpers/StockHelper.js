@@ -99,7 +99,7 @@ const tradableArray = (arrayValues, date) => {
 };
 
 const getTopGainersOrLoser = data => {
-  var mappedData = _.map(data, function(item) {
+  var mappedData = underscore.map(data, function(item) {
     var keys = Object.keys(item);
     var itemData = item[keys[0]];
     const { longName, symbol, regularMarketChangePercent } = itemData.price;
@@ -111,14 +111,23 @@ const getTopGainersOrLoser = data => {
     };
   });
 
-  var topGainer = _.filter(mappedData, function(item) {
+  var topGainer = underscore.filter(mappedData, function(item) {
     return item.change > 0;
   });
 
-  var topLoser = _.filter(mappedData, function(item) {
+  topGainer = underscore
+    .sortBy(topGainer, "change")
+    .reverse()
+    .slice(0, 5);
+  var topLoser = underscore.filter(mappedData, function(item) {
     return item.change < 0;
   });
 
+  topLoser = underscore
+    .sortBy(topLoser, "change")
+    .reverse()
+    .slice(0, 5);
   return { topGainer, topLoser };
 };
+
 export { stockReturns, changePercentage, getTopGainersOrLoser };
