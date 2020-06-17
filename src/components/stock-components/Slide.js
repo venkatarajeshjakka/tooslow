@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { navigate } from "../../NavigationRef";
-import { Icon } from '../common'
+import { Icon } from "../common";
 
 const IndividualSlide = ({ name, change }) => {
   let iconName = change > 0 ? "arrowup" : "arrowdown";
@@ -17,10 +17,7 @@ const IndividualSlide = ({ name, change }) => {
         <Text style={styles.stockCode}>{name}</Text>
 
         <View style={styles.right}>
-          <Icon
-            name={iconName}
-            
-          />
+          <Icon name={iconName} />
 
           <Text style={styles.value}>{change}%</Text>
         </View>
@@ -68,12 +65,12 @@ const styles = StyleSheet.create({
     color: "#0078ff"
   },
   value: {
-    fontSize: 16
+    fontSize: 16,
+    alignContent: "center"
   },
   right: {
     flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    justifyContent: "center",
     flexDirection: "row"
   }
 });

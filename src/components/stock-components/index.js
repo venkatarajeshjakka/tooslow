@@ -1,3 +1,7 @@
 export * from './PriceSummary'
 export * from './StockSwiper'
 export * from './Slide'
+export * from './SearchResults'
+export * from './TopSearchResults'
+export * from './StockReturns'
+export * from './GainerLoser'

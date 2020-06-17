@@ -1,25 +1,30 @@
 import React from "react";
-import { Text, StyleSheet, FlatList, View } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import Card from "./Card";
-
-import { CardHeader ,Section } from "./common";
+import { CardHeader, Section } from "./common";
+const RenderList = ({ data }) => {
+  if (data && data.length > 1) {
+    return (
+      <View>
+        {data.map((item, key) => {
+          return (
+            <Section key={key}>
+              <Text style={styles.label}>{item.label}</Text>
+              <Text style={styles.value}>{item.value}</Text>
+            </Section>
+          );
+        })}
+      </View>
+    );
+  }
+};
 const TargetPriceCard = ({ data, heading }) => {
   return (
     <View style={styles.container}>
       <Card>
         <CardHeader heading={heading} />
-        <FlatList
-          data={data}
-          keyExtractor={item => item.label}
-          renderItem={({ item }) => {
-            return (
-              <Section>
-                <Text style={styles.label}>{item.label}</Text>
-                <Text style={styles.value}>{item.value}</Text>
-              </Section>
-            );
-          }}
-        />
+
+        <RenderList data={data} />
       </Card>
     </View>
   );

@@ -32,6 +32,8 @@ const stockReducer = (state, action) => {
         topSearchedStock: [...state.topSearchedStock, action.payload]
       };
 
+    case "get_stock_data_history":
+      return { ...state, stockHistoryArray: action.payload };
     default:
       return state;
   }
@@ -100,14 +102,34 @@ const get = dispatch => async stockCode => {
   } catch (err) {}
 };
 
+const getStockHistory = dispatch => async stockCode => {
+  stockCode = stockCode + ".NS";
+
+  const baseUrl = "/nse-historical-data";
+
+  try {
+    var response = await Stock.post(baseUrl, { stockCode, months: 12 });
+    var payload = response.data;
+    dispatch({ type: "get_stock_data_history", payload: payload });
+  } catch (err) {}
+};
+
 export const { Provider, Context } = createDataContext(
   stockReducer,
-  { searchResults, updateSearchTerm, clearSearch, get, clearSearchStockData },
+  {
+    searchResults,
+    updateSearchTerm,
+    clearSearch,
+    get,
+    clearSearchStockData,
+    getStockHistory
+  },
   {
     results: null,
     errorMessage: "",
     searchTerm: null,
     searchStockData: null,
-    topSearchedStock: ["TCS", "SBIN", "INFY", "BAJFINANCE", "RELAXO"]
+    topSearchedStock: ["TCS", "SBIN", "INFY", "BAJFINANCE", "RELAXO"],
+    stockHistoryArray: []
   }
 );

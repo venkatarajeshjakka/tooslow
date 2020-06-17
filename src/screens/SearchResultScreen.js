@@ -13,9 +13,29 @@ import { Context as WatchListContext } from "../context/WatchListContext";
 import { NavigationEvents } from "react-navigation";
 import TargetPriceCard from "../components/TargetPriceCard";
 import { AntDesign } from "@expo/vector-icons";
-import { targetData, statisticsData } from "../mapper/StockResultsMapper";
+import {
+  targetData,
+  statisticsData,
+  companyEssentials
+} from "../mapper/StockResultsMapper";
 import SafeAreaView from "react-native-safe-area-view";
-import { PriceSummary } from "../components/stock-components";
+import { PriceSummary, StockReturns } from "../components/stock-components";
+
+const ModalSection = ({ staticalData, onPress }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={{ marginTop: 5 }}>
+        <View style={styles.close}>
+          <TouchableHighlight onPress={onPress}>
+            <AntDesign name="close" size={25} />
+          </TouchableHighlight>
+        </View>
+
+        <TargetPriceCard data={staticalData} heading="Key Statistics" />
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const SearchResultScreen = ({ navigation }) => {
   const stockCode = navigation.getParam("stockCode");
@@ -27,6 +47,7 @@ const SearchResultScreen = ({ navigation }) => {
   useEffect(() => {
     get(stockCode);
     checkBookmark(stockCode);
+    getStockHistory(stockCode);
   }, []);
 
   handleOnPressLike = () => {
@@ -34,15 +55,16 @@ const SearchResultScreen = ({ navigation }) => {
   };
 
   const {
-    state: { searchStockData },
+    state: { searchStockData, stockHistoryArray },
     get,
-    clearSearchStockData
+    clearSearchStockData,
+    getStockHistory
   } = useContext(StockContext);
 
   const [modalVisible, setModalVisible] = useState(false);
 
   if (!searchStockData) {
-    return <ActivityIndicator size="large" tyle={{ marginTop: 200 }} />;
+    return <ActivityIndicator size="large" style={{ marginTop: 200 }} />;
   }
   if (searchStockData) {
     const {
@@ -75,24 +97,12 @@ const SearchResultScreen = ({ navigation }) => {
           visible={modalVisible}
           onRequestClose={() => {}}
         >
-          <SafeAreaView style={styles.container}>
-            <View style={{ marginTop: 5 }}>
-              <View style={styles.close}>
-                <TouchableHighlight
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <AntDesign name="close" size={25} />
-                </TouchableHighlight>
-              </View>
-
-              <TargetPriceCard
-                data={statisticsData(searchStockData)}
-                heading="Key Statistics"
-              />
-            </View>
-          </SafeAreaView>
+          <ModalSection
+            staticalData={statisticsData(searchStockData)}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          />
         </Modal>
         <TouchableOpacity
           onPress={() => {
@@ -111,6 +121,18 @@ const SearchResultScreen = ({ navigation }) => {
             heading="Target Price"
           />
         ) : null}
+
+        <TargetPriceCard
+          data={companyEssentials(searchStockData)}
+          heading="Company Essentials"
+        />
+        <View style={{ marginBottom : 30}}>
+          {stockHistoryArray && stockHistoryArray.length > 0 ? (
+            <StockReturns data={stockHistoryArray} />
+          ) : (
+            <ActivityIndicator size="large" />
+          )}
+        </View>
       </ScrollView>
     );
   }
