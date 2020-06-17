@@ -10,6 +10,7 @@ import {
 import { TabView, TabBar } from "react-native-tab-view";
 import Change from "../Change";
 import { getTopGainersOrLoser } from "../../helpers/StockHelper";
+import { navigate } from "../../NavigationRef";
 const StockList = ({ onPress, longPress, data }) => {
   const { stockName, change } = data;
   return (
@@ -29,32 +30,31 @@ const StockList = ({ onPress, longPress, data }) => {
 };
 
 const FirstRoute = ({ topGainer }) => {
+  return <Route data={topGainer} />;
+};
+
+const Route = ({ data }) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={topGainer}
+        data={data}
         scrollEnabled
         keyExtractor={(item, index) => item.stockCode}
         renderItem={({ item }) => {
-          return <StockList data={item} />;
+          return (
+            <StockList
+              data={item}
+              onPress={() => {
+                navigate("StockResultHome", { stockCode: item.stockCode });
+              }}
+            />
+          );
         }}
       />
     </View>
   );
 };
-
-const SecondRoute = ({ topLoser }) => (
-  <View style={styles.container}>
-    <FlatList
-      data={topLoser}
-      scrollEnabled
-      keyExtractor={(item, index) => item.stockCode}
-      renderItem={({ item }) => {
-        return <StockList data={item} />;
-      }}
-    />
-  </View>
-);
+const SecondRoute = ({ topLoser }) => <Route data={topLoser} />;
 
 const initialLayout = { width: Dimensions.get("window").width };
 

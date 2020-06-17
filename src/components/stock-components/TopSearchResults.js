@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Chip } from "../form-components";
+import { navigate } from "../../NavigationRef";
 const TopSearchResults = ({ data }) => {
   if (data) {
     return (
@@ -12,7 +13,9 @@ const TopSearchResults = ({ data }) => {
                 key={key}
                 value={item}
                 style={{ backgroundColor: "#E1EFFF" }}
-                onPress={() => alert(`u pressed chip`)}
+                onPress={() => {
+                  navigate("SearchResult", { stockCode: item });
+                }}
               />
             );
           })}
