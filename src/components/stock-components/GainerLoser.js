@@ -10,7 +10,7 @@ import { TabView, TabBar } from "react-native-tab-view";
 import Change from "../Change";
 import { getTopGainersOrLoser } from "../../helpers/StockHelper";
 import { navigate } from "../../NavigationRef";
-import { white } from "color-name";
+
 const StockList = ({ onPress, longPress, data }) => {
   const { stockName, change } = data;
   return (
