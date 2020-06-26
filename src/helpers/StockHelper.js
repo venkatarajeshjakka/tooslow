@@ -123,10 +123,7 @@ const getTopGainersOrLoser = data => {
     return item.change < 0;
   });
 
-  topLoser = underscore
-    .sortBy(topLoser, "change")
-    .reverse()
-    .slice(0, 5);
+  topLoser = underscore.sortBy(topLoser, "change").slice(0, 5);
   return { topGainer, topLoser };
 };
 

@@ -10,6 +10,7 @@ import { TabView, TabBar } from "react-native-tab-view";
 import Change from "../Change";
 import { getTopGainersOrLoser } from "../../helpers/StockHelper";
 import { navigate } from "../../NavigationRef";
+import { white } from "color-name";
 const StockList = ({ onPress, longPress, data }) => {
   const { stockName, change } = data;
   return (
@@ -87,19 +88,29 @@ const GainerLoser = ({ data }) => {
     }
   };
   return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={props => (
-        <RenderScene {...props} data={topGainerOrLoserData} />
-      )}
-      onIndexChange={setIndex}
-      initialLayout={initialLayout}
-      renderTabBar={renderTabBar}
-    />
+    <View style={styles.box}>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={props => (
+          <RenderScene {...props} data={topGainerOrLoserData} />
+        )}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+        renderTabBar={renderTabBar}
+        style={{ margin: 5 }}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {},
+  box: {
+    flex: 1,
+    margin: 10,
+    backgroundColor: "white",
+    borderRadius: 15
+  },
   stockContainer: {
     padding: 10,
     borderColor: "#ddd",
