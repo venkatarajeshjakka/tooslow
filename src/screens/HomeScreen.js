@@ -1,5 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView
+} from "react-native";
 import { Context as WatchListContext } from "../context/WatchListContext";
 
 import { GainerLoser } from "../components/stock-components";
@@ -24,7 +29,9 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#F0EEEE" }}>
-      <GainerLoser data={watchListStockData} />
+      <ScrollView>
+        <GainerLoser data={watchListStockData} />
+      </ScrollView>
     </SafeAreaView>
   );
 };

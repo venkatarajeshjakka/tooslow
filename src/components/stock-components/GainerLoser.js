@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  FlatList,
   TouchableOpacity
 } from "react-native";
 import { TabView, TabBar } from "react-native-tab-view";
@@ -36,21 +35,17 @@ const FirstRoute = ({ topGainer }) => {
 const Route = ({ data }) => {
   return (
     <View style={styles.container}>
-      <FlatList
-        data={data}
-        scrollEnabled
-        keyExtractor={(item, index) => item.stockCode}
-        renderItem={({ item }) => {
-          return (
-            <StockList
-              data={item}
-              onPress={() => {
-                navigate("StockResultHome", { stockCode: item.stockCode });
-              }}
-            />
-          );
-        }}
-      />
+      {data.map((item, key) => {
+        return (
+          <StockList
+            key={key}
+            data={item}
+            onPress={() => {
+              navigate("StockResultHome", { stockCode: item.stockCode });
+            }}
+          />
+        );
+      })}
     </View>
   );
 };
